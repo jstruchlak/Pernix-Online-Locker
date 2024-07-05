@@ -2,8 +2,6 @@ require('dotenv').config()
 
 const express = require('express')
 const mongoose = require('mongoose')
-
-// import routes
 const detailRoutes = require('./routes/details')
 
 
