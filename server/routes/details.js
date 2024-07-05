@@ -1,4 +1,5 @@
 const express = require('express')
+const Detail = require('../models/detailModel')
 
 const router = express.Router()
 
@@ -13,8 +14,16 @@ router.get('/:id', (req, res) => {
 })
 
 // POST
-router.post('/', (req, res) => {
-    res.json({mssg: 'POST new detail'})
+router.post('/', async (req, res) => {
+    const { fullName, dob, aboutMe } = req.body
+
+    // try and create a new documemt with the properties from schema
+    try{
+        const detail = await Detail.create({fullName, dob, aboutMe})
+        res.status(200).json(detail)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 })
 
 // DELETE
