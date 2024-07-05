@@ -1,13 +1,19 @@
 require('dotenv').config()
 
 const express = require('express')
+const mongoose = require('mongoose')
+
+// import routes
 const detailRoutes = require('./routes/details')
+
+
 
 // start the express application (invoke from package)
 const app = express()
 
 
 // middleware
+app.use(express.json())
 app.use((req, res, next) => {
     console.log(req.path, req.method)
     // call next otherwise app cant move on 
@@ -17,8 +23,18 @@ app.use((req, res, next) => {
 // add routing - calling to detail.js 
 app.use('/api/details', detailRoutes)
 
-// request listener + dotnet package - process.env
-app.listen(process.env.PORT, () => {
-    console.log('Listening on port', process.env.PORT)
-})
+// connecting to our mongoose db (all db request = asynschronis
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log('Connected to db')
+        // request listener + dotnet package - process.env
+        app.listen(process.env.PORT, () => {
+            console.log('Listening on port', process.env.PORT, )
+        })
+
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+
 
