@@ -2,7 +2,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
 // pages and componenets
 import Home from './pages/Home';
-import Navbar from './componenets.js/Navbar';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
