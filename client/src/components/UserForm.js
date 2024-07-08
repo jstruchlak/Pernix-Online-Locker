@@ -1,6 +1,10 @@
 import { useState } from 'react'
+import { useDetailsContext } from '../hooks/useDetailsContext'
 
 const UserForm = () => {
+    const { dispatch } = useDetailsContext()
+
+
     // set each value's state to null / empty
     const [fullName, setFullName] = useState('')
     const [dob, setDob] = useState('')
@@ -41,6 +45,7 @@ const UserForm = () => {
             setDob('')
             setAboutMe('')
             console.log('New user added', json)
+            dispatch({type: 'CREATE_DETAILS', payload: json})
         }
     }
 
