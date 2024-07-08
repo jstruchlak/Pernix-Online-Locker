@@ -31,3 +31,54 @@ header a {
   padding: 20px;
   margin: 0 auto;
 }
+
+/* display users profile data */
+.user-details {
+  background: #fff;
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+
+/* form styling  */
+input {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.create-profile-button {
+  background: linear-gradient(45deg, #6a11cb, #2575fc); 
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+.create-profile-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
+}
+.create-profile-button:active {
+  transform: translateY(1px);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+form button {
+  background: linear-gradient(45deg, #6a11cb, #2575fc); 
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
