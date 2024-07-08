@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import UserDetails from '../components/UserDetails';
+import UserForm from "../components/UserForm";
 
 
 const Home = () => {
@@ -24,7 +25,7 @@ const Home = () => {
 
     return (
         <div className="home">
-            <div className="details"></div>
+            <div className="details">
 
                 
                 {/* see if any data to display and returns so in a template - details.map for a future roles function */}
@@ -32,6 +33,8 @@ const Home = () => {
                     // output detail values in template return template = ( )
                     <UserDetails detail={detail} key={detail._id} />
                 ))}
+                </div>
+                <UserForm/>
         </div>
     )
 }
