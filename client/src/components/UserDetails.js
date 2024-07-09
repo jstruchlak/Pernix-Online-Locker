@@ -25,7 +25,7 @@ const UserDetails = ({ detail }) => {
             <h2>{detail.fullName.toUpperCase()}</h2>
             <p><strong>Date Of Birth: &nbsp;</strong>{formattedDob}</p>
             <p><strong>Role: &nbsp;</strong>{detail.aboutMe}</p>
-            <p><br /><strong>Joined Pernix: &nbsp;</strong>{formatDistanceToNow(new Date(detail.createdAt), { addSuffix: true })}</p>
+            <p><br /><strong>Profile Created: &nbsp;</strong>{formatDistanceToNow(new Date(detail.createdAt), { addSuffix: true })}</p>
             <span onClick={handleClick} className="material-symbols-outlined">delete</span>
         </div>
     )
