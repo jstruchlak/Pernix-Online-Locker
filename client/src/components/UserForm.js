@@ -10,6 +10,7 @@ const UserForm = () => {
     const [dob, setDob] = useState('')
     const [aboutMe, setAboutMe] = useState('')
     const [error, setError] = useState(null)
+    const [emptyFields, setEmptyFields] = useState([])
 
 
 
@@ -36,6 +37,7 @@ const UserForm = () => {
         // set error - controller for POST has an error property
         if(!response.ok) {
             setError(json.error)
+            setEmptyFields(json.emptyFields)
         }
 
         // reset state of form values if ok
@@ -52,23 +54,28 @@ const UserForm = () => {
     return (
         <form className="create" onSubmit={handleSubmit}>
 
+            <h2>Create Profile</h2>
+
             <label>Full Name:</label>
             <input
                 type="text"
                 onChange={(e) => setFullName(e.target.value)}
                 value={fullName}
+                className={emptyFields.includes('Full Name') ? 'error' : ''}
             />  
             <label>Date of Birth:</label>
             <input
                 type="date"
                 onChange={(e) => setDob(e.target.value)}
                 value={dob}
+                className={emptyFields.includes('Date of Birth') ? 'error' : ''}
             />
             <label>Role:</label>
             <input
                 type="text"
                 onChange={(e) => setAboutMe(e.target.value)}
                 value={aboutMe}
+                className={emptyFields.includes('Role') ? 'error' : ''}
             />
 
             <button>Create Profile</button>

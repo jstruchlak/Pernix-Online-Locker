@@ -7,7 +7,11 @@
   --error: #e7195a;
 }
 body {
-  background: #f1f1f1;
+  background-image: url('C:/PERNIX WORKSPACE/Pernix-Online-Locker/client/public/pVault.jpg');
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center; 
   margin: 0;
   font-family: "Poppins";
 }
@@ -40,9 +44,21 @@ header a {
   padding: 20px;
   position: relative;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  width: 70%; 
 }
 
 /* form styling  */
+form.create {
+  background: #fff;
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+  width: 70%; 
+ 
+}
+
 input {
   padding: 10px;
   margin-top: 10px;
@@ -81,4 +97,26 @@ form button {
   font-family: "Poppins";
   border-radius: 4px;
   cursor: pointer;
+}
+/* error handling  */
+div.error {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+input.error {
+  border: 1px solid var(--error)
+}
+.user-details span {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
 }
