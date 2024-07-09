@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const detailRoutes = require('./routes/details')
+const userRoutes = require('./routes/user')
 
 
 
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
 
 // add routing - calling to detail.js 
 app.use('/api/details', detailRoutes)
+app.use('/api/user', userRoutes)
 
 // connecting to our mongoose db (all db request = asynschronis
 mongoose.connect(process.env.MONGO_URI)
