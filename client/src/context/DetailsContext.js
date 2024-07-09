@@ -40,8 +40,9 @@ export const DetailsContextProvider =  ({ children }) => {
     })
 
     return (
-        <DetailsContext.Provider value={{...state, dispatch}}>
+        <DetailsContext.Provider value={{ ...state, dispatch }}>
             {children}
         </DetailsContext.Provider>
+        
     )
 }

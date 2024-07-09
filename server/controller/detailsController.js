@@ -30,6 +30,26 @@ const getDetail = async (req, res) => {
 // CREATE function
 const createDetail = async (req, res) => {
     const {fullName, dob, aboutMe} = req.body
+
+    // error handling check
+    let emptyFields = []
+
+    if(!fullName) {
+        emptyFields.push('Full Name')
+    }
+    if(!dob) {
+        emptyFields.push('Date of Birth')
+    }
+    if(!aboutMe) {
+        emptyFields.push('Role')
+    }
+
+    // return error message
+    if(emptyFields.length > 0) {
+        return res.status(400).json({error: 'All fields are required', emptyFields})
+    }
+
+
     // try and create a new documemt with the properties from schema
     try {
         const detail = await Detail.create({fullName, dob, aboutMe})
