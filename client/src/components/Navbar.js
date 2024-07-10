@@ -19,6 +19,12 @@ const Navbar = () => {
                         <h3>Your Info, Your Safe Place.</h3>
                     </span>
                 </Link>
+                <nav>
+                    <div>
+                        <Link to="/login">Login</Link>
+                        <Link to="/signup">Signup</Link>
+                    </div>
+                </nav>
             </div>
         </header>
     )

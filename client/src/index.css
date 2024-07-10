@@ -35,8 +35,6 @@ header a {
   padding: 20px;
   margin: 0 auto;
 }
-
-/* display users profile data */
 .user-details {
   background: #fff;
   border-radius: 4px;
@@ -46,8 +44,6 @@ header a {
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
   width: 70%; 
 }
-
-/* form styling  */
 form.create {
   background: #fff;
   border-radius: 4px;
@@ -58,7 +54,6 @@ form.create {
   width: 70%; 
  
 }
-
 input {
   padding: 10px;
   margin-top: 10px;
@@ -98,7 +93,7 @@ form button {
   border-radius: 4px;
   cursor: pointer;
 }
-/* error handling  */
+
 div.error {
   padding: 10px;
   background: #ffefef;
@@ -119,4 +114,18 @@ input.error {
   padding: 6px;
   border-radius: 50%;
   color: #333;
+}
+nav {
+  display: flex;
+  align-items: center;
+}
+nav a {
+  margin-left: 10px;
+}
+form.signup, form.login {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 4px;
 }
