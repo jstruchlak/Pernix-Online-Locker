@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const Schema = mongoose.Schema
 const validator = require('validator')
 
-const userSchema = new Schema ({
+const userSchema = new Schema({
     username: {
         type: String,
         required: true,
@@ -20,9 +20,8 @@ const userSchema = new Schema ({
 
 })
 
-// static method used for additional password security
+// static signup method 
 userSchema.statics.signup = async function (username, email, password) {
-
 
     // signup form field validation
     if (!username || !email || !password) {
@@ -30,7 +29,7 @@ userSchema.statics.signup = async function (username, email, password) {
     }
 
     // form validator package validation
-    if (!validator.isLength(username,  { min: 4, max: 30 })) {
+    if (!validator.isLength(username, { min: 4, max: 30 })) {
         throw Error('Username is not valid. It should be 4-30 characters')
     }
     if (!validator.isEmail(email)) {
@@ -39,8 +38,6 @@ userSchema.statics.signup = async function (username, email, password) {
     if (!validator.isStrongPassword(password)) {
         throw Error('Password is too weak')
     }
-
-
 
     const exists = await this.findOne({ email })
     // throw error if already in use
@@ -58,5 +55,31 @@ userSchema.statics.signup = async function (username, email, password) {
 
     return user
 }
+
+// static login method
+userSchema.statics.login = async function (username, email, password) {
+
+    // login form field validation
+    if (!username || !email || !password) {
+        throw Error('All fields are required')
+    }
+
+    // check to see if email exist in database
+    const user = await this.findOne({ email })
+    if (!user) {
+        throw Error('Incorrect email')
+    }
+
+    // compare the entered pass with the hashed stored in db (bcrypt.compare) built in function
+    const match = await bcrypt.compare(password, user.password)
+
+    if (!match) {
+        throw Error('Incorrect password')
+    }
+
+    return user
+}
+
+
 
 module.exports = mongoose.model('User', userSchema)
