@@ -1,6 +1,13 @@
 import { Link } from 'react-router-dom'
+import { useLogout } from '../hooks/useLogout'
 
 const Navbar = () => {
+    // invoke logout function from the useLogout hook
+    const { logout } = useLogout()
+
+    const handleClick = () => {
+        logout()
+    }
 
     return (
         <header>
@@ -12,7 +19,7 @@ const Navbar = () => {
                             <img
                                 src="/pernix-custom.png"
                                 alt="logo"
-                                style={{ width: '120px', height: '39px', verticalAlign: 'middle', padding: '0 3px', marginTop: '-4px' }}
+                                style={{ width: '150px', height: '103px', verticalAlign: 'middle', padding: '0 px', marginTop: '-3px' }}
                             />
                             - Online Locker
                         </h1>
@@ -20,6 +27,9 @@ const Navbar = () => {
                     </span>
                 </Link>
                 <nav>
+                    <div>
+                        <button onClick={handleClick}>Log Out</button>
+                    </div>
                     <div>
                         <Link to="/login">Login</Link>
                         <Link to="/signup">Signup</Link>
