@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useDetailsContext } from '../hooks/useDetailsContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const UserForm = () => {
     const { dispatch } = useDetailsContext()
+    const { user } = useAuthContext()
 
 
     // set each value's state to null / empty
@@ -18,6 +20,12 @@ const UserForm = () => {
         // prevent auto page refresh
         e.preventDefault()
 
+        // if check for logged in user
+        if(!user) {
+            setError('You must be logged in')
+            return
+        }
+
         // object containing values
         const detail = {fullName, dob, aboutMe}
 
@@ -26,7 +34,9 @@ const UserForm = () => {
             method: 'POST',
             body: JSON.stringify(detail),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                // add auth header from auth hook
+                'Authorization': `Bearer ${user.token}`
             }
         })
 

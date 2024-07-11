@@ -2,16 +2,23 @@ import { useEffect } from "react"
 import UserDetails from '../components/UserDetails';
 import UserForm from "../components/UserForm";
 import { useDetailsContext } from "../hooks/useDetailsContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 
 const Home = () => {
     // invoked from details context where details state is set to null
     // dispatch function attached will fire 'action' to update state
    const {details, dispatch} = useDetailsContext()
+   const { user } = useAuthContext()
 
     useEffect(() => {
         const fetchDetails = async () => {
-            const response = await fetch('/api/details')
+            // response must contain Authorization token use backticks and access user vairable from useAuthContext
+            const response = await fetch('/api/details', {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
             const  json = await response.json()
 
 
@@ -21,10 +28,14 @@ const Home = () => {
             }
         }
 
-        fetchDetails()
 
-         //  2nd arg [] = only runs once after rendering above 
-    }, [dispatch])
+        // checks if there is a user from AuthContext
+        if(user) {
+            fetchDetails()
+        }
+
+     //  make user from AuthContext a dispatch dependency
+    }, [dispatch, user])
 
 
     return (

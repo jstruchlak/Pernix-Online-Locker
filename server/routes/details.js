@@ -6,8 +6,12 @@ const {
     updateDetail,
     deleteDetail
  } = require('../controller/detailsController')
+const requireAuth = require('../middleware/requireAuth')
 
 const router = express.Router()
+
+// first check if user is authenticated before accessing any other routes
+router.use(requireAuth)
 
 // GET all details route
 router.get('/', getDetails)
