@@ -16,8 +16,13 @@ const Login = () => {
     }
 
     return (
-        <form className="signup" onSubmit={handleSubmit}>
-            <h3>Login </h3>
+        <form className="login" onSubmit={handleSubmit}>
+            <img
+                src="/auth.png"
+                alt="auth"
+                style={{ width: '120px', height: '35px'}}
+            />
+            <h3>LOGIN</h3>
 
             <label>Username</label>
             <input

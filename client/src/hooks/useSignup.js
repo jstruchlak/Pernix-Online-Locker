@@ -14,10 +14,12 @@ export const useSignup = () => {
         // POST req - straight to proxy in package.json
         const response = await fetch('/api/user/signup', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+            },
             // return JSON - pass in objects {}
-            body: JSON.stringify({ username, email, password })
-        })
+            body: JSON.stringify({ username, email, password }),
+        });
 
         // response include JSON web token and email
         const json = await response.json()
@@ -30,12 +32,13 @@ export const useSignup = () => {
         if (response.ok) {
             // stored user email and token in json format
             localStorage.setItem('user', JSON.stringify(json))
-        }
 
-        //update AuthContext 
-        dispatch({ type: 'LOGIN', payload: json })
-        
-        setIsLoading(false)
+            // update the auth context
+            dispatch({ type: 'LOGIN', payload: json })
+
+            // update loading state
+            setIsLoading(false)
+        }
 
     }
 

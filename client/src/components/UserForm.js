@@ -61,10 +61,16 @@ const UserForm = () => {
         }
     }
 
+    const getMaxDate = () => {
+        const today = new Date();
+        today.setFullYear(today.getFullYear() - 18);
+        return today.toISOString().split('T')[0];
+    }
+
     return (
         <form className="create" onSubmit={handleSubmit}>
 
-            <h2>Create Profile</h2>
+            <h2>CREATE PROFILE</h2>
 
             <label>Full Name:</label>
             <input
@@ -78,6 +84,7 @@ const UserForm = () => {
                 type="date"
                 onChange={(e) => setDob(e.target.value)}
                 value={dob}
+                max={getMaxDate()}
                 className={emptyFields.includes('Date of Birth') ? 'error' : ''}
             />
             <label>Role:</label>

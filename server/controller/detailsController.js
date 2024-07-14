@@ -3,8 +3,11 @@ const mongoose = require('mongoose')
 
 // GET all functon
 const getDetails = async (req, res) => {
-    // .find({ empty }) will get all from db
-    const details = await Detail.find({ }).sort({createdAt: -1})
+    // add user_id from request body
+    const user_id = req.user._id
+
+    // .find({ user_d }) will get all prfiles from db created with that id
+    const details = await Detail.find({ user_id }).sort({createdAt: -1})
     res.status(200).json(details)
 
 }
@@ -52,7 +55,9 @@ const createDetail = async (req, res) => {
 
     // try and create a new documemt with the properties from schema
     try {
-        const detail = await Detail.create({fullName, dob, aboutMe})
+        // addidng id for assignment implemented inside the middleware folder
+        const user_id = req.user._id
+        const detail = await Detail.create({fullName, dob, aboutMe, user_id})
         res.status(200).json(detail)
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -81,22 +86,22 @@ const deleteDetail = async (req, res) => {
 
 // UPDATE function
 const updateDetail = async (req, res) => {
-    const { id } = req.params
-     
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: 'Does not exist'})
+    const { id } = req.params;
+    
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'Does not exist' });
     }
     // use spread operator for patching ( ... ) = all the parameters in the body fullName etc
-    const detail = await Detail.findByIdAndUpdate({_id: id}, {
+    const detail = await Detail.findByIdAndUpdate({ _id: id }, {
         ...req.body
-    })
-
-    if(!detail) {
-        return res.status(400).json({error: 'Does not exist'})
+    }, { new: true });
+    if (!detail) {
+        return res.status(400).json({ error: 'Does not exist' });
     }
-
-    res.status(200).json(detail)
+    res.status(200).json(detail);
 }
+
+
 
 module.exports = {
     createDetail,
