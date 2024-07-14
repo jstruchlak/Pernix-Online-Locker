@@ -14,11 +14,16 @@ const detailSchema = new Schema({
     aboutMe: {
         type: String,
         required: true
-    }
+    },
    /*  profilePic: {
         type: String,
         required: true
     } */
+    // for document assignment
+    user_id: {
+        type: String,
+        reuired: true
+    }
 }, 
 
 

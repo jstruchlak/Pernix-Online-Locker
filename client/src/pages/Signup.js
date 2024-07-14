@@ -7,23 +7,25 @@ const Signup = () => {
     const [password, setPassword] = useState('')
 
     // invoke signup hook
-    const {signup, isLoading, error} = useSignup()
+    const { signup, isLoading, error } = useSignup()
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-
-        await signup(username, email, password)
-    }
+        e.preventDefault();
+        await signup(username, email, password);
+    };
 
     return (
         <form className="signup" onSubmit={handleSubmit}>
-            
-            <h3>Sign up</h3>
+            <img
+                src="/auth.png"
+                alt="auth"
+                style={{ width: '120px', height: '35px' }}
+            />
+            <h3>SIGN UP</h3>
 
             <label>Username</label>
             <input
-                type="username"
-                // (e) event targeting the input text value
+                type="text"
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
             />

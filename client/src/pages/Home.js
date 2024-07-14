@@ -1,8 +1,10 @@
 import { useEffect } from "react"
-import UserDetails from '../components/UserDetails';
-import UserForm from "../components/UserForm";
 import { useDetailsContext } from "../hooks/useDetailsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+
+// components
+import UserDetails from '../components/UserDetails';
+import UserForm from "../components/UserForm";
 
 
 const Home = () => {
@@ -15,11 +17,9 @@ const Home = () => {
         const fetchDetails = async () => {
             // response must contain Authorization token use backticks and access user vairable from useAuthContext
             const response = await fetch('/api/details', {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const  json = await response.json()
+                headers: {'Authorization': `Bearer ${user.token}`},
+              })
+              const json = await response.json()
 
 
             if(response.ok) {
@@ -42,9 +42,9 @@ const Home = () => {
         <div className="home">
             <div className="details">
                 {/* see if any data to display and returns so in a template - details.map for a future roles function */}
-                {details && details.map(detail => (
+                {details && details.map((detail) => (
                     // output detail values in template return template = ( )
-                    <UserDetails detail={detail} key={detail._id} />
+                    <UserDetails key={detail._id} detail={detail} />
                 ))}
             </div>
             <UserForm />

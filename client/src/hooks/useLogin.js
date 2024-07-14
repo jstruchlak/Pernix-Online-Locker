@@ -30,14 +30,14 @@ export const useLogin = () => {
         if (response.ok) {
             // stored user email and token in json format
             localStorage.setItem('user', JSON.stringify(json))
+
+            // update the auth context
+            dispatch({type: 'LOGIN', payload: json})
+      
+            // update loading state
+            setIsLoading(false)
+          }
         }
-
-        //update AuthContext 
-        dispatch({ type: 'LOGIN', payload: json })
-        
-        setIsLoading(false)
-
-    }
 
     return { login, isLoading, error }
 

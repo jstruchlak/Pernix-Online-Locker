@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
-const Schema = mongoose.Schema
 const validator = require('validator')
+
+const Schema = mongoose.Schema
 
 const userSchema = new Schema({
     username: {
@@ -23,12 +24,12 @@ const userSchema = new Schema({
 // static signup method 
 userSchema.statics.signup = async function (username, email, password) {
 
-    // signup form field validation
+    // signup form field validation - custom 
     if (!username || !email || !password) {
         throw Error('All fields are required')
     }
 
-    // form validator package validation
+    // form validator package validation - package func
     if (!validator.isLength(username, { min: 4, max: 30 })) {
         throw Error('Username is not valid. It should be 4-30 characters')
     }
@@ -46,10 +47,11 @@ userSchema.statics.signup = async function (username, email, password) {
     }
 
     // execute bcrypt functions if email valid
-    // Generate a salt for hashing the password
-    const salt = await bcrypt.genSalt(10)
-    // Hash the password with the generated salt
+    // Generate a salt for hashing the password 
+    const salt = await bcrypt.genSalt(14)
+    // compute the hash 16384 times = 14
     const hash = await bcrypt.hash(password, salt)
+
     // Create a new user with the provided email and hashed password
     const user = await this.create({ username, email, password: hash })
 
