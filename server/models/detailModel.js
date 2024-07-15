@@ -19,7 +19,8 @@ const detailSchema = new Schema({
         type: String,
         required: true
     } */
-    // for document assignment
+
+    // for document assignment (assigning profiles)
     user_id: {
         type: String,
         reuired: true
