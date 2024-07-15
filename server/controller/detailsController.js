@@ -6,7 +6,7 @@ const getDetails = async (req, res) => {
     // add user_id from request body
     const user_id = req.user._id
 
-    // .find({ user_d }) will get all prfiles from db created with that id
+    // .find({ user_d }) will get all profiles from db created with that id
     const details = await Detail.find({ user_id }).sort({createdAt: -1})
     res.status(200).json(details)
 
