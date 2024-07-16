@@ -1,4 +1,5 @@
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
+import Modal from  'react-modal'
 
 // pages and componenets
 import Home from './pages/Home';
@@ -6,6 +7,8 @@ import Login  from './pages/Login'
 import Signup  from './pages/Signup'
 import Navbar from './components/Navbar';
 import { useAuthContext } from './hooks/useAuthContext';
+
+Modal.setAppElement('#root');
 
 function App() {
   const { user } = useAuthContext()
