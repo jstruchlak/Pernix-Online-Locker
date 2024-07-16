@@ -1,40 +1,49 @@
-import { useDetailsContext } from '../hooks/useDetailsContext'
+import { useDetailsContext } from '../hooks/useDetailsContext';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import format from 'date-fns/format';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useState } from 'react';
+import ConfirmationModal from '../modals/ConfirmationModal';
+import NotificationModal from '../modals/NotificationModal';
+
 
 const UserDetails = ({ detail }) => {
-    const { dispatch } = useDetailsContext()
-    const { user } = useAuthContext()
+    const { dispatch } = useDetailsContext();
+    const { user } = useAuthContext();
+
     const [isEditing, setIsEditing] = useState(false);
     const [fullName, setFullName] = useState(detail.fullName);
-    // correct date format using split method
     const [dob, setDob] = useState(detail.dob ? detail.dob.split('T')[0] : '');
     const [aboutMe, setAboutMe] = useState(detail.aboutMe);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showNotificationModal, setShowNotificationModal] = useState(false);
+    const [notificationMessage, setNotificationMessage] = useState('');
 
+    // State for showing delete confirmation modal
+    const handleDeleteClick = () => {
+        setShowDeleteModal(true);
+    }
 
-    const handleClick = async () => {
-        // if check for logged in user
+    const handleConfirmDelete = async () => {
+        setShowDeleteModal(false);
         if (!user) {
-            return
-        }
-        const confirmDelete = window.confirm("Are you sure you want to delete this profile?");
-        if (!confirmDelete) {
             return;
         }
+
         const response = await fetch('api/details/' + detail._id, {
             method: 'DELETE',
-            // add auth check for valid token 
             headers: { 'Authorization': `Bearer ${user.token}` }
         });
-
         const json = await response.json()
         if (response.ok) {
             dispatch({ type: 'DELETE_DETAILS', payload: json });
         }
     }
-    // edit icon will set View Mode to Edit Mode
+
+    const handleCancelDelete = () => {
+        setShowDeleteModal(false);
+    }
+     // edit icon will set View Mode to Edit Mode
     const handleEditClick = () => {
         setIsEditing(true);
     }
@@ -49,7 +58,6 @@ const UserDetails = ({ detail }) => {
             return;
         }
         const updatedDetail = { fullName, dob, aboutMe };
-        // await fetch - wait for response before moving on
         const response = await fetch('api/details/' + detail._id, {
             method: 'PATCH',
             headers: {
@@ -62,9 +70,13 @@ const UserDetails = ({ detail }) => {
         if (response.ok) {
             dispatch({ type: 'UPDATE_DETAILS', payload: json });
             setIsEditing(false);
+            setNotificationMessage('Profile updated successfully.');
+            setShowNotificationModal(true);
         }
     }
+
     const formattedDob = detail.dob ? format(new Date(detail.dob), 'MMMM do, yyyy') : '';
+
     return (
         <div className="user-details">
             {isEditing ? (
@@ -104,12 +116,26 @@ const UserDetails = ({ detail }) => {
                     <p><strong>Role: &nbsp;</strong>{detail.aboutMe}</p>
                     <p><br /><strong>Profile Created: &nbsp;</strong>{formatDistanceToNow(new Date(detail.createdAt), { addSuffix: true })}</p>
                     <div className="icon-container">
-                        <span onClick={handleClick} className="material-symbols-outlined">delete</span>
+                        <span onClick={handleDeleteClick} className="material-symbols-outlined">delete</span>
                         <span onClick={handleEditClick} className="material-symbols-outlined">edit</span>
                     </div>
                 </>
             )}
+
+
+            {/* Display Modals */}
+            <ConfirmationModal
+                isOpen={showDeleteModal}
+                onRequestClose={handleCancelDelete}
+                onConfirm={handleConfirmDelete}
+                message="Are you sure you want to delete this profile?"
+            />
+            <NotificationModal
+                isOpen={showNotificationModal}
+                onRequestClose={() => setShowNotificationModal(false)}
+                message={notificationMessage}
+            />
         </div>
-    )
+    );
 }
-export default UserDetails
+export default UserDetails;

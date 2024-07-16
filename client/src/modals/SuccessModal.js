@@ -1,0 +1,29 @@
+import React, { useEffect } from 'react';
+import Modal from 'react-modal';
+
+const SuccessModal = ({ isOpen, onRequestClose }) => {
+  useEffect(() => {
+    let timeout;
+    if (isOpen) {
+      timeout = setTimeout(() => {
+        onRequestClose();
+      }, 3000);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [isOpen, onRequestClose]);
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
+      className="success-modal"
+      overlayClassName="success-modal-overlay"
+      ariaHideApp={false}
+    >
+  
+    </Modal>
+  );
+};
+
+export default SuccessModal;
