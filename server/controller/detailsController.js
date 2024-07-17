@@ -1,12 +1,13 @@
 const Detail = require('../models/detailModel')
 const mongoose = require('mongoose')
+const upload = require('../middleware/multerConfig')
 
 // GET all functon
 const getDetails = async (req, res) => {
     // add user_id from request body
     const user_id = req.user._id
 
-    // .find({ user_d }) will get all profiles from db created with that id
+    // .find({ user_d }) will get all prfiles from db created with that id
     const details = await Detail.find({ user_id }).sort({createdAt: -1})
     res.status(200).json(details)
 
@@ -46,6 +47,10 @@ const createDetail = async (req, res) => {
     if(!aboutMe) {
         emptyFields.push('Role')
     }
+    if (!req.file) {
+        emptyFields.push('Profile Picture');
+    }
+
 
     // return error message
     if(emptyFields.length > 0) {
@@ -55,9 +60,10 @@ const createDetail = async (req, res) => {
 
     // try and create a new documemt with the properties from schema
     try {
+        const profilePic = req.file.path;
         // addidng id for assignment implemented inside the middleware folder
         const user_id = req.user._id
-        const detail = await Detail.create({fullName, dob, aboutMe, user_id})
+        const detail = await Detail.create({ fullName, dob, aboutMe, profilePic, user_id });
         res.status(200).json(detail)
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -85,20 +91,32 @@ const deleteDetail = async (req, res) => {
 
 
 // UPDATE function
+// UPDATE function
 const updateDetail = async (req, res) => {
     const { id } = req.params;
-    
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'Does not exist' });
+        return res.status(404).json({ error: 'Invalid ID' });
     }
-    // use spread operator for patching ( ... ) = all the parameters in the body fullName etc
-    const detail = await Detail.findByIdAndUpdate({ _id: id }, {
-        ...req.body
-    }, { new: true });
-    if (!detail) {
-        return res.status(400).json({ error: 'Does not exist' });
+
+    try {
+        let updateFields = { ...req.body };
+
+        // Handle profile picture update if there's a file upload
+        if (req.file) {
+            updateFields.profilePic = req.file.path;
+        }
+
+        const updatedDetail = await Detail.findByIdAndUpdate(id, updateFields, { new: true });
+
+        if (!updatedDetail) {
+            return res.status(404).json({ error: 'Detail not found' });
+        }
+
+        res.status(200).json(updatedDetail);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
-    res.status(200).json(detail);
 }
 
 
