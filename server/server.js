@@ -5,17 +5,14 @@ const mongoose = require('mongoose')
 const detailRoutes = require('./routes/details')
 const userRoutes = require('./routes/user')
 
-
-
 // start the express application (invoke from package)
 const app = express()
-
 
 // middleware
 app.use(express.json())
 app.use((req, res, next) => {
     console.log(req.path, req.method)
-    // call next otherwise app cant move on 
+    // call next otherwise app crash 
     next()
 })
 
@@ -29,7 +26,7 @@ mongoose.connect(process.env.MONGO_URI)
         console.log('Connected to db')
         // request listener + dotnet package - process.env
         app.listen(process.env.PORT, () => {
-            console.log('Listening on port', process.env.PORT, )
+            console.log('Listening on port', process.env.PORT,)
         })
 
     })

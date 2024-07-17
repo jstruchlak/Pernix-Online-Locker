@@ -11,11 +11,12 @@ const UserForm = () => {
     const [fullName, setFullName] = useState('')
     const [dob, setDob] = useState('')
     const [aboutMe, setAboutMe] = useState('')
+    const [profilePic, setProfilePic] = useState(null);
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
     const [showSuccessModal, setShowSuccessModal] = useState(false)
     const [notificationMessage, setNotificationMessage] = useState('')
-
+    
     const handleSubmit = async (e) => {
         // prevent auto page refresh
         e.preventDefault()
@@ -26,16 +27,19 @@ const UserForm = () => {
             return
         }
 
-        // object containing values
-        const detail = { fullName, dob, aboutMe }
+        const formData = new FormData();
+        formData.append('fullName', fullName);
+        formData.append('dob', dob);
+        formData.append('aboutMe', aboutMe);
+        if (profilePic) {
+            formData.append('profilePic', profilePic);
+        }
 
         // send POST req - with app.use route from server.js (/api/details)
         const response = await fetch('/api/details', {
             method: 'POST',
-            body: JSON.stringify(detail),
+            body: formData,
             headers: {
-                'Content-Type': 'application/json',
-                // add auth header from auth hook
                 'Authorization': `Bearer ${user.token}`
             }
         })
@@ -56,6 +60,8 @@ const UserForm = () => {
             setFullName('')
             setDob('')
             setAboutMe('')
+            setProfilePic(null)
+            e.target.reset();
             console.log('New user added', json)
             dispatch({ type: 'CREATE_DETAILS', payload: json })
             setShowSuccessModal(true)
@@ -95,6 +101,13 @@ const UserForm = () => {
                 onChange={(e) => setAboutMe(e.target.value)}
                 value={aboutMe}
                 className={emptyFields.includes('Role') ? 'error' : ''}
+            />
+             <label>Profile Picture:</label>
+            <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setProfilePic(e.target.files[0])}
+                className={emptyFields.includes('Profile Picture') ? 'error' : ''}
             />
 
             <button>Create Profile</button>
