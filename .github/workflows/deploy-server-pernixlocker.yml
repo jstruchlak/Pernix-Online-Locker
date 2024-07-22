@@ -22,15 +22,11 @@ jobs:
 
     - name: Install dependencies
       run: npm install
-      working-directory: ./server  # Ensure this is correct for your backend
+      working-directory: ./server  
 
     # - name: Run tests
     #   run: npm test
-    #   working-directory: ./server  # Ensure this is correct for your backend
-
-    - name: Build
-      run: npm run build
-      working-directory: ./server  # Make sure this is correct for your backend
+    #   working-directory: ./server  
 
     - name: Deploy to Azure
       uses: azure/webapps-deploy@v3
