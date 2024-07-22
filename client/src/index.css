@@ -5,7 +5,7 @@
   --error: #e7195a;
 }
 body {
-  background-image: url('C:/PERNIX WORKSPACE/Pernix-Online-Locker/client/public/pVault.jpg');
+  background-image: url('../public/pVault.jpg');
   background-size: cover; 
   background-repeat: no-repeat;
   background-attachment: fixed;
