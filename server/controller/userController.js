@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 // genrate a token _id = part of the payload
 const createToken = (_id) => {
 // invalidate token in 1hr
-return jwt.sign({_id}, process.env.SECRET, {expiresIn: '1h'} )
+return jwt.sign({_id}, process.env.JWT_SECRET, {expiresIn: '1h'} )
 }
 // login user
 const loginUser = async (req, res) => {

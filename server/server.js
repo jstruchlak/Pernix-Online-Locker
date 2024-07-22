@@ -24,7 +24,6 @@ app.use('/api/user', userRoutes)
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log('Connected to db')
-        // request listener + dotnet package - process.env
         app.listen(process.env.PORT, () => {
             console.log('Listening on port', process.env.PORT,)
         })
