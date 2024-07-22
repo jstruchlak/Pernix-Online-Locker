@@ -19,13 +19,18 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '18' 
+
     - name: Install dependencies
       run: npm install
-      working-directory: ./server  
+      working-directory: ./server  # Ensure this is correct for your backend
+
+    # - name: Run tests
+    #   run: npm test
+    #   working-directory: ./server  # Ensure this is correct for your backend
 
     - name: Build
       run: npm run build
-      working-directory: ./server  
+      working-directory: ./server  # Make sure this is correct for your backend
 
     - name: Deploy to Azure
       uses: azure/webapps-deploy@v3
@@ -33,4 +38,4 @@ jobs:
         app-name: 'api-pernix-locker'  
         slot-name: 'Production'  # Deployment slot (use 'Production' for the main slot)
         package: './server'  
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} 
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
