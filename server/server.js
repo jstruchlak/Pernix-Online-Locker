@@ -1,5 +1,5 @@
 require('dotenv').config()
-
+const cors = require('cors'); 
 const express = require('express')
 const mongoose = require('mongoose')
 const detailRoutes = require('./routes/details')
@@ -9,6 +9,11 @@ const userRoutes = require('./routes/user')
 const app = express()
 
 // middleware
+app.use(cors({
+    origin: 'https://pernixlocker.azurewebsites.net',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    credentials: true 
+}));
 app.use(express.json())
 app.use((req, res, next) => {
     console.log(req.path, req.method)
