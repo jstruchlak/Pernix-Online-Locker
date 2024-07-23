@@ -12,7 +12,7 @@ export const useSignup = () => {
         setError(null)
 
         // POST req - straight to proxy in package.json
-        const response = await fetch(`${process.env.REACT_APP_API_SERVER}/api/user/login`, {
+        const response = await fetch('/api/user/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
