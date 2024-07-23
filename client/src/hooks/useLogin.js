@@ -12,12 +12,12 @@ export const useLogin = () => {
         setError(null)
 
         // POST req - straight to proxy in package.json
-        const response = await fetch('/api/user/login', {
+        const response = await fetch(`${process.env.REACT_APP_API_SERVER}/api/user/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            // return JSON - pass in objects {}
             body: JSON.stringify({ username, email, password })
-        })
+        });
+        
 
         // response include JSON web token and email
         const json = await response.json()
