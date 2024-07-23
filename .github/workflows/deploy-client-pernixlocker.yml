@@ -1,4 +1,4 @@
-name: Deploy Frontend
+name: Deploy Frontend Application
 
 on:
   push:
@@ -13,23 +13,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout Repository Code
       uses: actions/checkout@v3
 
-    - name: Set up Node.js
+    - name: Setup Node.js Environment
       uses: actions/setup-node@v3
       with:
         node-version: '18' 
 
-    - name: Install dependencies
+    - name: Install Project Dependencies
       run: npm install
       working-directory: ./client 
 
-    - name: Build
+    - name: Build React Application
       run: npm run build
       working-directory: ./client
 
-    - name: Deploy to Azure Web App
+    - name: Deploy Build Artifacts to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
         app-name: pernixlocker 
