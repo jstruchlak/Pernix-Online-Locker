@@ -12,7 +12,7 @@ const requireAuth = async (req, res, next) => {
   console.log('Received jwt Token:', token);
   try {
     // Returns ID only from payload - verify the token and secret from .env
-    const { _id } = jwt.verify(token, process.env.JWT_SECRET);
+    const { _id } = jwt.verify(token, process.env.SECRET);
     // check
     console.log('Verified jwt ID:', _id);
     // Returns a smaller object of the ID property
