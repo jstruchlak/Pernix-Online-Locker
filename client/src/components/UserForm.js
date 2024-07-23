@@ -49,7 +49,7 @@ const UserForm = () => {
             formData.append('profilePic', profilePic);
         }
         // send POST req - with app.use route from server.js (/api/details)
-        const response = await fetch('/api/details', {
+        const response = await fetch(`${process.env.REACT_APP_API_SERVER}/api/details`, {
             method: 'POST',
             body: formData,
             headers: {

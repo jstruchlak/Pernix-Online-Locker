@@ -51,7 +51,7 @@ const UserDetails = ({ detail }) => {
         if (!user) {
             return;
         }
-        const response = await fetch('api/details/' + detail._id, {
+        const response = await fetch(`${process.env.REACT_APP_API_SERVER}/api/details` + detail._id, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${user.token}` }
         });
@@ -84,7 +84,7 @@ const UserDetails = ({ detail }) => {
             formData.append('profilePic', profilePicFile);
         }
 
-        const response = await fetch('api/details/' + detail._id, {
+        const response = await fetch(`${process.env.REACT_APP_API_SERVER}/api/details` + detail._id, {
             method: 'PATCH',
             headers: {
                 'Authorization': `Bearer ${user.token}`
