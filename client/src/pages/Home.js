@@ -41,16 +41,15 @@ const Home = () => {
 
     return (
         <div className="home">
-            <div className="details">
-                {/* see if any data to display and returns so in a template - details.map for a future roles function */}
-                {details && details.map((detail) => (
-                    // output detail values in template return template = ( )
-                    <UserDetails key={detail._id} detail={detail} />
-                ))}
-            </div>
-            <UserForm />
+          <div className="details">
+            {details &&
+              details.map((detail) => (
+                <UserDetails key={detail._id} detail={detail} />
+              ))}
+          </div>
+          {/* Hide UserForm if there are details to display */}
+          {details && details.length === 0 && <UserForm />}
         </div>
-    )
-}
-
-export default Home
+      );
+    };
+    export default Home;

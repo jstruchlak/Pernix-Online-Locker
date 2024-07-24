@@ -4,6 +4,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const detailRoutes = require('./routes/details')
 const userRoutes = require('./routes/user')
+const path = require('path')
 
 // start the express application (invoke from package)
 const app = express()
@@ -28,6 +29,14 @@ app.use((req, res, next) => {
 // add routing - calling to detail.js 
 app.use('/api/details', detailRoutes)
 app.use('/api/user', userRoutes)
+
+// Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'client/build')))
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
 
 // connecting to our mongoose db (all db request = asynschronis
 mongoose.connect(process.env.MONGO_URI)
