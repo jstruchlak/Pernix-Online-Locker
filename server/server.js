@@ -16,6 +16,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+
 // middleware
 app.use(express.json())
 app.use((req, res, next) => {
