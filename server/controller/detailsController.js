@@ -91,7 +91,6 @@ const deleteDetail = async (req, res) => {
 
 
 // UPDATE function
-// UPDATE function
 const updateDetail = async (req, res) => {
     const { id } = req.params;
 
@@ -118,7 +117,7 @@ const updateDetail = async (req, res) => {
         console.error(error); // Log error for debugging
         res.status(400).json({ error: error.message });
     }
-}
+};
 
 
 
