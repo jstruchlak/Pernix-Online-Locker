@@ -1,5 +1,5 @@
 require('dotenv').config()
-
+const cors = require('cors')
 const express = require('express')
 const mongoose = require('mongoose')
 const detailRoutes = require('./routes/details')
@@ -7,6 +7,14 @@ const userRoutes = require('./routes/user')
 
 // start the express application (invoke from package)
 const app = express()
+
+const corsOptions = {
+    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type,Authorization'
+};
+
+app.use(cors(corsOptions));
 
 // middleware
 app.use(express.json())

@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useDetailsContext } from "../hooks/useDetailsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import config from "../config";
 
 // components
 import UserDetails from '../components/UserDetails';
@@ -16,7 +17,7 @@ const Home = () => {
     useEffect(() => {
         const fetchDetails = async () => {
             // response must contain Authorization token use backticks and access user vairable from useAuthContext
-            const response = await fetch('/api/details', {
+            const response = await fetch(`${config.apiServer}/api/details`, {
                 headers: {'Authorization': `Bearer ${user.token}`},
               })
               const json = await response.json()

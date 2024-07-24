@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAuthContext } from '../hooks/useAuthContext'
+import config from '../config'
 
 export const useSignup = () => {
     const [error, setError] = useState(null)
@@ -12,7 +13,7 @@ export const useSignup = () => {
         setError(null)
 
         // POST req - straight to proxy in package.json
-        const response = await fetch('/api/user/signup', {
+        const response = await fetch(`${config.apiServer}/api/user/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
