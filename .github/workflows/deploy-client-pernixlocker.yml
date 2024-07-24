@@ -1,4 +1,4 @@
-name: Deploy Frontend Application
+name: Deploy (client) Frontend
 
 on:
   push:
