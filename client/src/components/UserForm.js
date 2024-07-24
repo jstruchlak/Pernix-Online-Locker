@@ -3,6 +3,7 @@ import { useDetailsContext } from '../hooks/useDetailsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 import SuccessModal from '../modals/NotificationModal';
 import React from 'react';
+import config from '../config';
 
 const UserForm = () => {
     const { dispatch } = useDetailsContext()
@@ -49,7 +50,7 @@ const UserForm = () => {
             formData.append('profilePic', profilePic);
         }
         // send POST req - with app.use route from server.js (/api/details)
-        const response = await fetch('/api/details', {
+        const response = await fetch(`${config.apiServer}/api/details`, {
             method: 'POST',
             body: formData,
             headers: {

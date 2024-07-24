@@ -115,9 +115,11 @@ const updateDetail = async (req, res) => {
 
         res.status(200).json(updatedDetail);
     } catch (error) {
+        console.error(error); // Log error for debugging
         res.status(400).json({ error: error.message });
     }
 }
+
 
 
 

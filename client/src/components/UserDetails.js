@@ -6,6 +6,9 @@ import ConfirmationModal from '../modals/ConfirmationModal';
 import NotificationModal from '../modals/NotificationModal';
 import React from 'react';
 import { format } from 'date-fns';
+import config from '../config';
+
+
 const UserDetails = ({ detail }) => {
     const { dispatch } = useDetailsContext();
     const { user } = useAuthContext();
@@ -51,15 +54,19 @@ const UserDetails = ({ detail }) => {
         if (!user) {
             return;
         }
-        const response = await fetch('api/details/' + detail._id, {
+        
+        const response = await fetch(`${config.apiServer}/api/details/${detail._id}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${user.token}` }
         });
+        
         const json = await response.json()
         if (response.ok) {
             dispatch({ type: 'DELETE_DETAILS', payload: json });
         }
     }
+
+    
     const handleCancelDelete = () => {
         setShowDeleteModal(false);
     }
@@ -71,34 +78,47 @@ const UserDetails = ({ detail }) => {
     const handleCancelClick = () => {
         setIsEditing(false);
     }
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!user) {
-            return;
-        }
-        const formData = new FormData();
-        formData.append('fullName', fullName);
-        formData.append('dob', dob);
-        formData.append('aboutMe', aboutMe);
-        if (profilePicFile) {
-            formData.append('profilePic', profilePicFile);
-        }
 
-        const response = await fetch('api/details/' + detail._id, {
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!user) {
+        return;
+    }
+    const formData = new FormData();
+    formData.append('fullName', fullName);
+    formData.append('dob', dob);
+    formData.append('aboutMe', aboutMe);
+    if (profilePicFile) {
+        formData.append('profilePic', profilePicFile);
+    }
+
+    try {
+        const response = await fetch(`${config.apiServer}/api/details/${detail._id}`, {
             method: 'PATCH',
             headers: {
                 'Authorization': `Bearer ${user.token}`
+                // Do not set Content-Type header when using FormData
             },
             body: formData
         });
-        const json = await response.json();
+
         if (response.ok) {
+            const json = await response.json();
             dispatch({ type: 'UPDATE_DETAILS', payload: json });
             setIsEditing(false);
             setNotificationMessage('Profile updated successfully.');
             setShowNotificationModal(true);
+        } else {
+            const error = await response.json();
+            setNotificationMessage(`Error: ${error.message}`);
+            setShowNotificationModal(true);
         }
+    } catch (error) {
+        setNotificationMessage(`An error occurred: ${error.message}`);
+        setShowNotificationModal(true);
     }
+}
+
 
     const formattedDob = detail.dob ? format(new Date(detail.dob), 'MMMM do, yyyy') : '';
     const profileCreated = detail.createdAt ? formatDistanceToNow(new Date(detail.createdAt), { addSuffix: true }) : 'Date not available';
