@@ -31,21 +31,24 @@ jobs:
 
       - name: Zip artifact for deployment
         run: |
+          # Zip the server directory
           cd server
-          zip -r release.zip .  # Create a zip file of the server directory
+          zip -r ../server.zip .  # Zip the server files into server.zip in the root directory
+
+          # Zip the client build directory
           cd ../client/build
-          zip -r ../../server/client-build.zip .  # Create a zip file of the client build directory
+          zip -r ../../client-build.zip .  # Zip the client build files into client-build.zip in the root directory
 
       - name: List files for debugging
-        run: ls -R server  # Verify the presence of release.zip and client-build.zip
+        run: ls -R  # List all files in the root directory to verify the presence of server.zip and client-build.zip
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
           path: |
-            server/release.zip
-            server/client-build.zip  # Include client build zip
+            server.zip
+            client-build.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -63,13 +66,13 @@ jobs:
           name: node-app
 
       - name: List files for debugging
-        run: ls -R  # Verify downloaded files
+        run: ls -R  # List all files in the root directory to verify downloaded files
 
       - name: Unzip server artifact
-        run: unzip -d server release.zip  # Unzip into server directory
+        run: unzip -d server server.zip  # Unzip server files into the server directory
 
       - name: Unzip client build artifact
-        run: unzip -d server/client-build client-build.zip  # Unzip client build into appropriate directory
+        run: unzip -d client/build client-build.zip  # Unzip client build files into the client/build directory
 
       - name: Login to Azure
         uses: azure/login@v2
