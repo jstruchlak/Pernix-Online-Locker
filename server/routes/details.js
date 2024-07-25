@@ -1,11 +1,11 @@
 const express = require('express')
-const { 
+const {
     createDetail,
     getDetails,
     getDetail,
     updateDetail,
     deleteDetail
- } = require('../controller/detailsController')
+} = require('../controller/detailsController')
 const requireAuth = require('../middleware/requireAuth')
 const upload = require('../middleware/multerConfig');
 
