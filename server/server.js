@@ -28,7 +28,6 @@ app.use((req, res, next) => {
 app.use('/api/details', detailRoutes);
 app.use('/api/user', userRoutes);
 
-// Serve static files from the client/build directory
 app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 // Handle React routing, return index.html
@@ -37,13 +36,13 @@ app.get('*', (req, res) => {
 });
 
 // Connecting to our mongoose db (all db request = asynchronous)
-mongoose.connect(process.env.MONGO_URI)
+    mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log('Connected to db');
         app.listen(port, () => {
-            console.log('Listening on port', port);
+            console.log(`Server is listening on port ${port}`);
         });
     })
     .catch((error) => {
-        console.log(error);
+        console.error('Database connection error:', error);
     });
