@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: '20.x'
 
-      - name: Install dependencies
+      - name: Install server dependencies
         run: |
           cd server
           npm install
@@ -57,14 +57,14 @@ jobs:
         run: ls -R  # Verify downloaded files
 
       - name: Unzip artifact for deployment
-        run: unzip -d server release.zip  # Unzip into server directory
+        run: unzip release.zip -d server  # Unzip into server directory
 
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FD6EDD5C1F6B49989FF2EE749392A909 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BE267B1AE40E4066A64B5C53B9DD5D3A }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_224E4995592B4998B113147275A5A529 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -72,4 +72,4 @@ jobs:
         with:
           app-name: 'pernix-api-locker'
           slot-name: 'Production'
-          package: ./server  # Adjust if necessary
+          package: ./server
