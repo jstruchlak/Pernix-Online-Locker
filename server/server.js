@@ -15,7 +15,6 @@ const corsOptions = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
 };
-
 app.use(cors(corsOptions));
 
 // Middleware
@@ -30,11 +29,11 @@ app.use('/api/details', detailRoutes);
 app.use('/api/user', userRoutes);
 
 // Serve static files from the client/build directory
-app.use(express.static(path.join(__dirname, 'client-build')));
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 // Handle React routing, return index.html
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client-build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
 
 // Connecting to our mongoose db (all db request = asynchronous)

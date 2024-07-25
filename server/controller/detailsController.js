@@ -8,7 +8,7 @@ const getDetails = async (req, res) => {
     const user_id = req.user._id
 
     // .find({ user_d }) will get all prfiles from db created with that id
-    const details = await Detail.find({ user_id }).sort({createdAt: -1})
+    const details = await Detail.find({ user_id }).sort({ createdAt: -1 })
     res.status(200).json(details)
 
 }
@@ -19,12 +19,12 @@ const getDetail = async (req, res) => {
     // destructering + route properties are all stored on "params" property
     const { id } = req.params
     // run a check if id matches what Mongo expects
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        res.status(404).json({error: 'Does not exist'})
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        res.status(404).json({ error: 'Does not exist' })
     }
     const detail = await Detail.findById(id)
-    if(!detail) {
-      return res.status(400).json({error: 'Does not exist'})
+    if (!detail) {
+        return res.status(400).json({ error: 'Does not exist' })
     }
 
     res.status(200).json(detail)
@@ -33,18 +33,18 @@ const getDetail = async (req, res) => {
 
 // CREATE function
 const createDetail = async (req, res) => {
-    const {fullName, dob, aboutMe} = req.body
+    const { fullName, dob, aboutMe } = req.body
 
     // error handling check
     let emptyFields = []
 
-    if(!fullName) {
+    if (!fullName) {
         emptyFields.push('Full Name')
     }
-    if(!dob) {
+    if (!dob) {
         emptyFields.push('Date of Birth')
     }
-    if(!aboutMe) {
+    if (!aboutMe) {
         emptyFields.push('Role')
     }
     if (!req.file) {
@@ -53,8 +53,8 @@ const createDetail = async (req, res) => {
 
 
     // return error message
-    if(emptyFields.length > 0) {
-        return res.status(400).json({error: 'All fields are required', emptyFields})
+    if (emptyFields.length > 0) {
+        return res.status(400).json({ error: 'All fields are required', emptyFields })
     }
 
 
@@ -66,7 +66,7 @@ const createDetail = async (req, res) => {
         const detail = await Detail.create({ fullName, dob, aboutMe, profilePic, user_id });
         res.status(200).json(detail)
     } catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(400).json({ error: error.message })
 
     }
 }
@@ -76,14 +76,14 @@ const createDetail = async (req, res) => {
 const deleteDetail = async (req, res) => {
     const { id } = req.params
 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        res.status(404).json({error: 'Does not exist'})
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        res.status(404).json({ error: 'Does not exist' })
     }
     // id stored as _id inside mongo db
     const detail = await Detail.findOneAndDelete({ _id: id })
 
-    if(!detail) {
-        return res.status(400).json({error: 'Does not exist'})
+    if (!detail) {
+        return res.status(400).json({ error: 'Does not exist' })
     }
 
     res.status(200).json(detail)
