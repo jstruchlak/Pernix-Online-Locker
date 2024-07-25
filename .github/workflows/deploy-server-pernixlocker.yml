@@ -28,6 +28,16 @@ jobs:
     #   run: npm test
     #   working-directory: ./server  
 
+    - name: Set Environment Variables
+      run: |
+        echo "REACT_APP_API_SERVER=${{ secrets.REACT_APP_API_SERVER }}" >> $GITHUB_ENV
+        echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
+        echo "SECRET=${{ secrets.SECRET }}" >> $GITHUB_ENV
+        echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" >> $GITHUB_ENV
+        echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> $GITHUB_ENV
+        echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> $GITHUB_ENV
+        echo "CORS_ORIGIN=${{ secrets.CORS_ORIGIN }}" >> $GITHUB_ENV
+
     - name: Deploy to Azure
       uses: azure/webapps-deploy@v3
       with:
