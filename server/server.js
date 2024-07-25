@@ -11,7 +11,7 @@ const port = process.env.PORT || 4000;
 const app = express();
 
 const corsOptions = {
-    origin: 'https://pernixlocker.azurewebsites.net', 
+    origin: 'https://pernixlocker.azurewebsites.net',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
 };
