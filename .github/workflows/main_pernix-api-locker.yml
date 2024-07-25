@@ -22,22 +22,17 @@ jobs:
         run: |
           npm install
           npm run build --if-present
-        working-directory: ./server  # Ensure this is pointing to the correct directory
-
-      # Skip testing if not required
-      # - name: Run tests
-      #   run: npm test
-      #   working-directory: ./server
+        working-directory: ./server
 
       - name: Zip artifact for deployment
         run: zip -r release.zip .  # Create a zip file of the server directory
-        working-directory: ./server  # Ensure this is pointing to the correct directory
+        working-directory: ./server
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: release.zip  # Path to the zip file of the server directory
+          path: ./server/release.zip  # Path to the zip file of the server directory
 
   deploy:
     runs-on: ubuntu-latest
@@ -46,7 +41,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
+      id-token: write
 
     steps:
       - name: Download artifact from build job
@@ -70,4 +65,4 @@ jobs:
         with:
           app-name: 'pernix-api-locker'
           slot-name: 'Production'
-          package: ./server  
+          package: ./server  # Ensure this is the path where unzipped files are located
