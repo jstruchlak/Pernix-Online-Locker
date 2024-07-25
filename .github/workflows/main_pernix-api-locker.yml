@@ -20,19 +20,23 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd server
           npm install
           npm run build --if-present
-        working-directory: ./server
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip .  # Create a zip file of the server directory
-        working-directory: ./server
+        run: |
+          cd server
+          zip -r release.zip .  # Create a zip file of the server directory
+
+      - name: List files for debugging
+        run: ls -R server  # Verify the presence of release.zip
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: release.zip  # Path to the zip file of the server directory
+          path: server/release.zip  # Path to the zip file
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,9 +53,11 @@ jobs:
         with:
           name: node-app
 
+      - name: List files for debugging
+        run: ls -R  # Verify downloaded files
+
       - name: Unzip artifact for deployment
-        run: |
-          unzip release.zip -d server  # Unzip to a server directory
+        run: unzip -d server release.zip  # Unzip into server directory
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -66,5 +72,4 @@ jobs:
         with:
           app-name: 'pernix-api-locker'
           slot-name: 'Production'
-          package: ./server 
-
+          package: ./server  # Adjust if necessary
