@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.d564c9f0.css",
+    "main.js": "/static/js/main.da167448.js",
+    "static/media/pVault.jpg": "/static/media/pVault.c0b8268c5b1b6e58d112.jpg",
+    "index.html": "/index.html",
+    "main.d564c9f0.css.map": "/static/css/main.d564c9f0.css.map",
+    "main.da167448.js.map": "/static/js/main.da167448.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d564c9f0.css",
+    "static/js/main.da167448.js"
+  ]
+}
