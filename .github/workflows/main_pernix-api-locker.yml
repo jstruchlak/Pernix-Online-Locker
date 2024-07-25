@@ -18,34 +18,25 @@ jobs:
         with:
           node-version: '20.x'
 
-      - name: Install server dependencies
+      - name: Install dependencies
         run: |
           cd server
           npm install
-
-      - name: Install client dependencies and build
-        run: |
-          cd client
-          npm install
-          npm run build
+          npm run build --if-present
 
       - name: Zip artifact for deployment
         run: |
           cd server
           zip -r release.zip .  # Create a zip file of the server directory
-          cd ../client/build
-          zip -r ../../server/client-build.zip .  # Create a zip file of the client build directory
 
       - name: List files for debugging
-        run: ls -R server  # Verify the presence of release.zip and client-build.zip
+        run: ls -R server  # Verify the presence of release.zip
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: |
-            server/release.zip
-            server/client-build.zip  # Include client build zip
+          path: server/release.zip  # Path to the zip file
 
   deploy:
     runs-on: ubuntu-latest
@@ -65,14 +56,8 @@ jobs:
       - name: List files for debugging
         run: ls -R  # Verify downloaded files
 
-      - name: Create directory for client build
-        run: mkdir -p client/build  # Ensure the client/build directory exists
-
-      - name: Unzip server artifact
+      - name: Unzip artifact for deployment
         run: unzip -d server release.zip  # Unzip into server directory
-
-      - name: Unzip client build artifact
-        run: unzip -d client/build client-build.zip  # Unzip client build into appropriate directory
 
       - name: Login to Azure
         uses: azure/login@v2
