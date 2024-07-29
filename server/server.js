@@ -5,9 +5,12 @@ const mongoose = require('mongoose');
 const detailRoutes = require('./routes/details');
 const userRoutes = require('./routes/user');
 const path = require('path');
+const swaggerUi = require('swagger-ui-express');
+const swaggerConfig = require('./swagger/swaggerConfig');
+
 const port = process.env.PORT || 4000;
 
-// Start the express application (invoke from package)
+// Start the express application
 const app = express();
 
 const corsOptions = {
@@ -24,10 +27,17 @@ app.use((req, res, next) => {
     next();
 });
 
-// Add routing - calling to detail.js
+// Swagger UI
+app.get('/', (req, res) => {
+    res.redirect('/api-docs');
+});
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
+
+// Add routing for API
 app.use('/api/details', detailRoutes);
 app.use('/api/user', userRoutes);
 
+// Serve React application
 app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 // Handle React routing, return index.html
@@ -35,8 +45,8 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
 
-// Connecting to our mongoose db (all db request = asynchronous)
-    mongoose.connect(process.env.MONGO_URI)
+// Connecting to our mongoose db
+mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log('Connected to db');
         app.listen(port, () => {
@@ -46,6 +56,7 @@ app.get('*', (req, res) => {
     .catch((error) => {
         console.error('Database connection error:', error);
     });
+
 // Global Error Handling
 process.on('uncaughtException', (err) => {
     console.error('There was an uncaught error', err);
