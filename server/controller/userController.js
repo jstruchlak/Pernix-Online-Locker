@@ -2,7 +2,7 @@ const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const bcrypt = require('bcrypt'); 
+const bcrypt = require('bcrypt');
 const validator = require('validator')
 const config = require('../config')
 
@@ -46,11 +46,11 @@ const signupUser = async (req, res) => {
 
 const transporter = nodemailer.createTransport({
   host: 'mail.smtp2go.com',
-  port: 587,  
-  secure: false,  
+  port: 587,
+  secure: false,
   auth: {
-    user: 'pernix.com.au',  
-    pass: 'rx#!3DA4?yfgYFcL'  
+    user: 'pernix.com.au',
+    pass: 'rx#!3DA4?yfgYFcL'
   }
 });
 
@@ -72,7 +72,7 @@ const forgotPassword = async (req, res) => {
 
     const resetToken = crypto.randomBytes(20).toString('hex');
     user.resetPasswordToken = resetToken;
-    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+    user.resetPasswordExpires = Date.now() + 3600000;
     await user.save();
     console.log('Reset token generated and saved for user:', email);
 
@@ -81,7 +81,7 @@ const forgotPassword = async (req, res) => {
     console.log('Sending reset email to:', email);
 
     const mailOptions = {
-      from: 'joeys@pernix.com.au',  
+      from: 'joeys@pernix.com.au',
       to: email,
       subject: 'Pernix Online Locker Password Reset',
       html: `<p>To reset your password, please click the link below:</p><p><a href="${resetUrl}">${resetUrl}</a></p>`
