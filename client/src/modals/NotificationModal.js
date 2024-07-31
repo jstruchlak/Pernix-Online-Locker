@@ -8,7 +8,7 @@ const NotificationModal = ({ isOpen, onRequestClose, message }) => {
             // Set a timeout to close the modal after 3 seconds
             timeout = setTimeout(() => {
                 onRequestClose();
-            }, 2500); 
+            }, 3500); 
         }
         
         

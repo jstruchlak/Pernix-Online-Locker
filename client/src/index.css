@@ -271,3 +271,19 @@ nav button {
   color: #555;
   margin-bottom: 10px;
 }
+/* Spinner.css */
+.spinner {
+  border-radius: 20%;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  mask-image: radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.2) 20%, rgba(0, 0, 0, 0.2) 80%, transparent 80%);
+  mask-size: cover;
+  margin-top: 10px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

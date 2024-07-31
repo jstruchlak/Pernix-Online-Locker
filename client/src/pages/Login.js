@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 
+
 const Login = () => {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
@@ -46,6 +47,8 @@ const Login = () => {
 
             <button disabled={isLoading}>Login</button>
             {error && <div className="error">{error}</div>}
+
+            <a href="/forgot-password">Forgot Password?</a>
         </form>
     )
 }

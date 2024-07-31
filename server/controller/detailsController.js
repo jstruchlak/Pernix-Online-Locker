@@ -51,6 +51,7 @@ const createDetail = async (req, res) => {
         emptyFields.push('Profile Picture');
     }
 
+    const profilePic = req.file ? req.file.path : '/defaultPic.png';
 
     // return error message
     if (emptyFields.length > 0) {
@@ -104,6 +105,8 @@ const updateDetail = async (req, res) => {
         // Handle profile picture update if there's a file upload
         if (req.file) {
             updateFields.profilePic = req.file.path;
+        } else {
+            updateFields.profilePic = '/defaultPic.png'; // Default picture
         }
 
         const updatedDetail = await Detail.findByIdAndUpdate(id, updateFields, { new: true });
