@@ -192,7 +192,7 @@
 
 /**
  * @swagger
- * /api/signup:
+ * /api/user/signup:
  *   post:
  *     tags: [Auth]
  *     summary: Signup a new user
@@ -212,3 +212,78 @@
  *       400:
  *         description: Invalid signup details
  */
+
+/**
+ * @swagger
+ * /api/user/forgot-password:
+ *   post:
+ *     tags: [Auth]
+ *     summary: Initiates the password reset process
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *     responses:
+ *       200:
+ *         description: Password reset link sent successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       400:
+ *         description: Invalid request or email not provided
+ *       404:
+ *         description: User with the provided email does not exist
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /api/user/reset-password:
+ *   post:
+ *     tags: [Auth]
+ *     summary: Resets the password using a token
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - token
+ *               - password
+ *             properties:
+ *               token:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Password has been reset successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       400:
+ *         description: Invalid token or password
+ *       404:
+ *         description: Token is invalid or expired
+ *       500:
+ *         description: Internal server error
+ */
+

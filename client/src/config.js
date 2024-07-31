@@ -4,4 +4,4 @@ const config = {
   isMock: false
 };
 
-export default config;
+module.exports = config;
