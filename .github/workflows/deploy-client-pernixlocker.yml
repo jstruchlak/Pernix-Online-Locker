@@ -29,9 +29,15 @@ jobs:
       run: npm run build
       working-directory: ./client
 
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ui-build
+        path: ./client/build
+
     - name: Deploy Build Artifacts to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
         app-name: pernixlocker 
         publish-profile: ${{ secrets.AZURE_PERNIXUI_PUBLISH_PROFILE }} 
-        package: './client/build' 
+        package: './client/build'
