@@ -113,7 +113,7 @@ const resetPassword = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json({ error: 'Password reset token is invalid or has expired' });
+      return res.status(400).json({ error: 'Your session has expired' });
     }
 
     // Check if the password is provided and if it's strong enough

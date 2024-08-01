@@ -17,9 +17,7 @@ const config = {
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
   CORS_ORIGIN: process.env.CORS_ORIGIN,
-  DEV_BASE_URL: process.env.DEV_BASE_URL,
-  SMTP_USER: process.env.SMTP_USER,
-  SMTP_PASS: process.env.SMTP_PASS
+  DEV_BASE_URL: process.env.DEV_BASE_URL
 };
 
 module.exports = config;

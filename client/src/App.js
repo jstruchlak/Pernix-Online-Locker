@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Modal from 'react-modal';
 
-// pages and components
+// Pages and components
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import ForgotPassword from './pages/ForgotPassword'; // Import the new page
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import Navbar from './components/Navbar';
 import { useAuthContext } from './hooks/useAuthContext';
-import ResetPassword from './pages/ResetPassword';
 
 Modal.setAppElement('#root');
 
@@ -35,11 +35,11 @@ function App() {
             />
             <Route
               path="/forgot-password"
-              element={<ForgotPassword />} // Add this route
+              element={<ForgotPassword />}
             />
             <Route
               path="/reset-password/:token"
-              element={<ResetPassword />} // Add this route
+              element={<ResetPassword />}
             />
           </Routes>
         </div>

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import config from '../config';
-import NotificationModal from "../modals/NotificationModal";
-
+import NotificationModal from '../modals/NotificationModal'
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -13,8 +13,8 @@ const ForgotPassword = () => {
     e.preventDefault();
 
     console.log('Submitting form with email:', email);
-    setLoading(true); // Show spinner
-    setShowNotificationModal(false); // Hide modal while loading
+    setLoading(true);
+    setShowNotificationModal(false);
 
     try {
       const response = await fetch(`${config.apiServer}/api/user/forgot-password`, {
@@ -31,17 +31,24 @@ const ForgotPassword = () => {
 
       if (response.ok) {
         setMessage('A password reset link has been sent to your email.');
+        setShowNotificationModal(true); 
       } else {
-        setMessage(json.error || 'An error occurred');
+        setError(json.error || 'An error occurred');
       }
     } catch (error) {
-        console.error('Fetch error:', error);
-        setMessage('An error occurred while sending the reset link.');
-      } finally {
-        setLoading(false); // Hide spinner
-        setShowNotificationModal(true); // Show modal
-      }
+      console.error('Fetch error:', error);
+      setError('An error occurred while sending the reset link.');
+    } finally {
+      setLoading(false);
+
+      setEmail('');
+      setTimeout(() => {
+        setError('');
+        setMessage('');
+      }, 3000);
     }
+  };
+
   return (
     <div>
       <form className="forgot-password" onSubmit={handleSubmit}>
@@ -52,15 +59,16 @@ const ForgotPassword = () => {
           onChange={(e) => setEmail(e.target.value)}
           value={email}
         />
-        <button type="submit">Send Reset Link</button>
+        <button type="submit" disabled={loading}>Send Reset Link</button>
       </form>
 
-      {loading && <div className="spinner"></div>} 
+      {error && <div className="error">{error}</div>}
+      {loading && <div className="spinner"></div>}
 
       <NotificationModal
-        isOpen={showNotificationModal} 
-        onRequestClose={() => setShowNotificationModal(false)} 
-        message={message} 
+        isOpen={showNotificationModal}
+        onRequestClose={() => setShowNotificationModal(false)}
+        message={message}
       />
     </div>
   );

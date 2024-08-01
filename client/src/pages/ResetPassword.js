@@ -5,9 +5,9 @@ import NotificationModal from "../modals/NotificationModal";
 
 const ResetPassword = () => {
   const { token } = useParams(); // Extract the token from the URL
-  const navigate = useNavigate(); // Hook to programmatically navigate
+  const navigate = useNavigate(); 
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState(''); // New state for confirmation password
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [showNotificationModal, setShowNotificationModal] = useState(false);
@@ -19,7 +19,7 @@ const ResetPassword = () => {
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       setSuccess('');
-      setShowNotificationModal(true);
+      setShowNotificationModal(false); 
       return;
     }
 
@@ -34,20 +34,20 @@ const ResetPassword = () => {
         setSuccess(json.message);
         setError('');
         setShowNotificationModal(true);
-        // Clear the form fields
         setPassword('');
         setConfirmPassword('');
+
         // Redirect to home page
-        setTimeout(() => navigate('/'), 2000); // Redirect after 2 seconds to show the notification
+        setTimeout(() => navigate('/'), 2000); 
       } else {
         setError(json.error || 'An error occurred');
         setSuccess('');
-        setShowNotificationModal(true);
+        setShowNotificationModal(false); 
       }
     } catch (err) {
       setError('An error occurred');
       setSuccess('');
-      setShowNotificationModal(true);
+      setShowNotificationModal(false); 
     }
   };
 
@@ -70,10 +70,11 @@ const ResetPassword = () => {
         <button type="submit">Reset Password</button>
       </form>
 
+      {error && <div className="error">{error}</div>}
       <NotificationModal
         isOpen={showNotificationModal}
         onRequestClose={() => setShowNotificationModal(false)}
-        message={success || error}
+        message={success}
       />
     </div>
   );
