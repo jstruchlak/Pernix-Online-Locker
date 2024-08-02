@@ -4,4 +4,6 @@ const config = {
   isMock: false
 };
 
-module.exports = config;
+console.log('API Server URL:', config.apiServer);
+
+export default config;
