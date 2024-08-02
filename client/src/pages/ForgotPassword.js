@@ -13,6 +13,7 @@ const ForgotPassword = () => {
     e.preventDefault();
 
     console.log('Submitting form with email:', email);
+    console.log('API Server URL:', config.apiServer);
     setLoading(true);
     setShowNotificationModal(false);
 
@@ -40,7 +41,6 @@ const ForgotPassword = () => {
       setError('An error occurred while sending the reset link.');
     } finally {
       setLoading(false);
-
       setEmail('');
       setTimeout(() => {
         setError('');
