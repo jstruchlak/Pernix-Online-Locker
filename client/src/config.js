@@ -4,6 +4,6 @@ const config = {
   isMock: false
 };
 
-console.log('API Server URL:', config.apiServer);
+console.log('API Server is URL:', config.apiServer);
 
 export default config;
