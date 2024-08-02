@@ -18,7 +18,7 @@ const ForgotPassword = () => {
     setShowNotificationModal(false);
 
     try {
-      const response = await fetch(`${config.apiServer}/api/user/forgot-password`, {
+      const response = await fetch(`https://pernix-api-locker.azurewebsites.net/api/user/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })

@@ -1,8 +1,8 @@
-const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
-const validator = require('validator')
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const validator = require('validator');
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     username: {
@@ -12,16 +12,15 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     resetPasswordToken: String,
-    resetPasswordExpires: Date
-
-})
+    resetPasswordExpires: Date,
+});
 
 // static signup method 
 userSchema.statics.signup = async function (username, email, password) {
