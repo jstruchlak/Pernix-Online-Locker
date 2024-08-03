@@ -14,7 +14,7 @@ Modal.setAppElement('#root');
 
 function App() {
   const { user } = useAuthContext();
-
+  console.log('Current User:', user);
   return (
     <div className="App">
       <BrowserRouter>

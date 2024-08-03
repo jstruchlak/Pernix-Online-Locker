@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom'; // Import useLocation
 import config from '../config';
-import NotificationModal from '../modals/NotificationModal'
+import NotificationModal from '../modals/NotificationModal';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -8,6 +9,15 @@ const ForgotPassword = () => {
   const [error, setError] = useState('');
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  
+  // Use useLocation to get the current route
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log('ForgotPassword component rendered');
+    console.log('Current location:', location.pathname); // Log the current route
+    // You can add more logic or fetch data if needed
+  }, [location]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,11 +28,15 @@ const ForgotPassword = () => {
     setShowNotificationModal(false);
 
     try {
-      const response = await fetch(`https://pernix-api-locker.azurewebsites.net/api/user/forgot-password`, {
+      const response = await fetch(`${config.apiServer}/api/user/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
       });
+
+      console.log('Fetch URL:', `${config.apiServer}/api/user/forgot-password`);
+console.log('Request Body:', JSON.stringify({ email }));
+
 
       console.log('Response Status:', response.status);
       console.log('Response Headers:', response.headers);
