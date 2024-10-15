@@ -66,6 +66,11 @@ userSchema.statics.login = async function (username, email, password) {
         throw Error('All fields are required')
     }
 
+    const userName = await this.findOne({ username })
+    if (!userName) {
+        throw Error('Incorrect Username')
+    }
+
     // check to see if email exist in database
     const user = await this.findOne({ email })
     if (!user) {
