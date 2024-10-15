@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 
-const SuccessModal = ({ isOpen, onRequestClose }) => {
+const SuccessModal = ({ isOpen, onRequestClose, message  }) => {
   useEffect(() => {
     let timeout;
     if (isOpen) {
@@ -21,7 +21,7 @@ const SuccessModal = ({ isOpen, onRequestClose }) => {
       overlayClassName="success-modal-overlay"
       ariaHideApp={false}
     >
-  
+      <div>{message}</div>
     </Modal>
   );
 };
