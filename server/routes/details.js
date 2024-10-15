@@ -1,14 +1,12 @@
 const express = require('express')
-const {
+const { 
     createDetail,
     getDetails,
     getDetail,
     updateDetail,
     deleteDetail
-} = require('../controller/detailsController')
+ } = require('../controller/detailsController')
 const requireAuth = require('../middleware/requireAuth')
-const upload = require('../middleware/multerConfig');
-
 
 const router = express.Router()
 
@@ -22,13 +20,13 @@ router.get('/', getDetails)
 router.get('/:id', getDetail)
 
 // POST
-router.post('/', upload.single('profilePic'), createDetail);
+router.post('/', createDetail)
 
 // DELETE
 router.delete('/:id', deleteDetail)
 
 // UPDATE
-router.patch('/:id', upload.single('profilePic'), updateDetail);
+router.patch('/:id', updateDetail)
 
 
 module.exports = router

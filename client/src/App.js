@@ -1,49 +1,41 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Modal from 'react-modal';
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
+import Modal from  'react-modal'
 
-// Pages and components
+// pages and componenets
 import Home from './pages/Home';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
+import Login  from './pages/Login'
+import Signup  from './pages/Signup'
 import Navbar from './components/Navbar';
 import { useAuthContext } from './hooks/useAuthContext';
 
 Modal.setAppElement('#root');
 
 function App() {
-  const { user } = useAuthContext();
-  console.log('Current User:', user);
+  const { user } = useAuthContext()
+
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+      <Navbar/>
         <div className="pages">
           <Routes>
             <Route
+            // redirect user based on authentication from Auth hook
               path="/"
-              element={user ? <Home /> : <Navigate to="/login" />}
+              element={user ? <Home/> : <Navigate to="/login" /> }
             />
             <Route
               path="/login"
-              element={!user ? <Login /> : <Navigate to="/" />}
+              element={!user ? <Login/> : <Navigate to="/" />}
             />
             <Route
               path="/signup"
-              element={!user ? <Signup /> : <Navigate to="/" />}
-            />
-            <Route
-              path="/forgot-password"
-              element={<ForgotPassword />}
-            />
-            <Route
-              path="/reset-password/:token"
-              element={<ResetPassword />}
+              element={!user ? <Signup/> : <Navigate to="/" />}
             />
           </Routes>
         </div>
       </BrowserRouter>
+
     </div>
   );
 }
