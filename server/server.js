@@ -1,69 +1,38 @@
-require('dotenv').config();
-const cors = require('cors');
-const express = require('express');
-const mongoose = require('mongoose');
-const detailRoutes = require('./routes/details');
-const userRoutes = require('./routes/user');
-const path = require('path');
-const swaggerUi = require('swagger-ui-express');
-const swaggerConfig = require('./swagger/swaggerConfig');
+require('dotenv').config()
 
-const port = process.env.PORT || 4000;
+const express = require('express')
+const mongoose = require('mongoose')
+const detailRoutes = require('./routes/details')
+const userRoutes = require('./routes/user')
 
-// Start the express application
-const app = express();
 
-const corsOptions = {
-    origin: 'https://pernixlocker.azurewebsites.net',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
-};
-app.use(cors(corsOptions));
 
-// Middleware
-app.use(express.json());
+// start the express application (invoke from package)
+const app = express()
+
+
+// middleware
+app.use(express.json())
 app.use((req, res, next) => {
-    console.log(req.path, req.method);
-    next();
-});
+    console.log(req.path, req.method)
+    // call next otherwise app cant move on 
+    next()
+})
 
-// Swagger UI
-app.get('/', (req, res) => {
-    res.redirect('/api-docs');
-});
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
+// add routing - calling to detail.js 
+app.use('/api/details', detailRoutes)
+app.use('/api/user', userRoutes)
 
-// Add routing for API
-app.use('/api/details', detailRoutes);
-app.use('/api/user', userRoutes);
-
-// Serve React application
-app.use(express.static(path.join(__dirname, 'client', 'build')));
-
-// Handle React routing, return index.html
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-});
-
-// Connecting to our mongoose db
+// connecting to our mongoose db (all db request = asynschronis
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
-        console.log('Connected to db');
-        app.listen(port, () => {
-            console.log(`Server is listening on port ${port}`);
-        });
+        console.log('Connected to db')
+        // request listener + dotnet package - process.env
+        app.listen(process.env.PORT, () => {
+            console.log('Listening on port', process.env.PORT, )
+        })
+
     })
     .catch((error) => {
-        console.error('Database connection error:', error);
-    });
-
-// Global Error Handling
-process.on('uncaughtException', (err) => {
-    console.error('There was an uncaught error', err);
-    process.exit(1);
-});
-
-process.on('unhandledRejection', (reason, promise) => {
-    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-    process.exit(1);
-});
+        console.log(error)
+    })

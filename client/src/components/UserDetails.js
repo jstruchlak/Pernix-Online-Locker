@@ -1,58 +1,28 @@
 import { useDetailsContext } from '../hooks/useDetailsContext';
-import { formatDistanceToNow } from 'date-fns';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import format from 'date-fns/format';
 import { useAuthContext } from '../hooks/useAuthContext';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ConfirmationModal from '../modals/ConfirmationModal';
 import NotificationModal from '../modals/NotificationModal';
-import { format } from 'date-fns';
-import config from '../config';
 
-const DEFAULT_PROFILE_PIC_URL = '/defaultPic.png';
 
 const UserDetails = ({ detail }) => {
     const { dispatch } = useDetailsContext();
     const { user } = useAuthContext();
+
     const [isEditing, setIsEditing] = useState(false);
     const [fullName, setFullName] = useState(detail.fullName);
     const [dob, setDob] = useState(detail.dob ? detail.dob.split('T')[0] : '');
     const [aboutMe, setAboutMe] = useState(detail.aboutMe);
-    const [profilePicFile, setProfilePicFile] = useState(null);
-    const [profilePicUrl, setProfilePicUrl] = useState(detail.profilePic || DEFAULT_PROFILE_PIC_URL);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showNotificationModal, setShowNotificationModal] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
-    const [error, setError] = useState('');
 
-    useEffect(() => {
-        if (!profilePicUrl || profilePicUrl === '/undefined') {
-            setProfilePicUrl(DEFAULT_PROFILE_PIC_URL);
-        }
-    }, [profilePicUrl]);
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        const allowedTypes = ['image/jpeg', 'image/png'];
-        const maxSize = 5 * 1024 * 1024;
-        if (file) {
-            if (!allowedTypes.includes(file.type)) {
-                setProfilePicFile(null);
-                setProfilePicUrl(DEFAULT_PROFILE_PIC_URL);
-                setError('Invalid file type. Only JPEG, JPG, and PNG files are allowed.');
-            } else if (file.size > maxSize) {
-                setProfilePicFile(null);
-                setProfilePicUrl(DEFAULT_PROFILE_PIC_URL);
-                setError('File size too large. The maximum allowed size is 5 MB.');
-            } else {
-                setProfilePicFile(file);
-                setProfilePicUrl(URL.createObjectURL(file));
-                setError('');
-            }
-        }
-    };
-
+    // State for showing delete confirmation modal
     const handleDeleteClick = () => {
         setShowDeleteModal(true);
-    };
+    }
 
     const handleConfirmDelete = async () => {
         setShowDeleteModal(false);
@@ -60,83 +30,52 @@ const UserDetails = ({ detail }) => {
             return;
         }
 
-        try {
-            const response = await fetch(`${config.apiServer}/api/details/${detail._id}`, {
-                method: 'DELETE',
-                headers: { 'Authorization': `Bearer ${user.token}` }
-            });
-
-            if (response.ok) {
-                dispatch({ type: 'DELETE_DETAILS', payload: await response.json() });
-            } else {
-                const error = await response.json();
-                setNotificationMessage(`Error: ${error.message}`);
-                setShowNotificationModal(true);
-            }
-        } catch (error) {
-            setNotificationMessage(`An error occurred: ${error.message}`);
-            setShowNotificationModal(true);
+        const response = await fetch('api/details/' + detail._id, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${user.token}` }
+        });
+        const json = await response.json()
+        if (response.ok) {
+            dispatch({ type: 'DELETE_DETAILS', payload: json });
         }
-    };
+    }
 
     const handleCancelDelete = () => {
         setShowDeleteModal(false);
-    };
-
+    }
+     // edit icon will set View Mode to Edit Mode
     const handleEditClick = () => {
         setIsEditing(true);
-    };
-
+    }
+    // default set is editing to false - View Mode
     const handleCancelClick = () => {
         setIsEditing(false);
-    };
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!user) {
             return;
         }
-        const formData = new FormData();
-        formData.append('fullName', fullName);
-        formData.append('dob', dob);
-        formData.append('aboutMe', aboutMe);
-        if (profilePicFile) {
-            formData.append('profilePic', profilePicFile);
-        }
-
-        try {
-            const response = await fetch(`${config.apiServer}/api/details/${detail._id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                },
-                body: formData
-            });
-
-            if (response.ok) {
-                const json = await response.json();
-                dispatch({ type: 'UPDATE_DETAILS', payload: json });
-                setProfilePicUrl(json.profilePic || DEFAULT_PROFILE_PIC_URL);
-                setIsEditing(false);
-                setNotificationMessage('Profile updated successfully.');
-                setShowNotificationModal(true);
-            } else {
-                const error = await response.json();
-                setNotificationMessage(`Error: ${error.message}`);
-                setShowNotificationModal(true);
-            }
-        } catch (error) {
-            setNotificationMessage(`An error occurred: ${error.message}`);
+        const updatedDetail = { fullName, dob, aboutMe };
+        const response = await fetch('api/details/' + detail._id, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            },
+            body: JSON.stringify(updatedDetail)
+        });
+        const json = await response.json();
+        if (response.ok) {
+            dispatch({ type: 'UPDATE_DETAILS', payload: json });
+            setIsEditing(false);
+            setNotificationMessage('Profile updated successfully.');
             setShowNotificationModal(true);
         }
-    };
+    }
 
     const formattedDob = detail.dob ? format(new Date(detail.dob), 'MMMM do, yyyy') : '';
-    const profileCreated = detail.createdAt ? formatDistanceToNow(new Date(detail.createdAt), { addSuffix: true }) : 'Date not available';
-
-    const handleImageError = () => {
-        setProfilePicUrl(DEFAULT_PROFILE_PIC_URL);
-    };
 
     return (
         <div className="user-details">
@@ -148,7 +87,6 @@ const UserDetails = ({ detail }) => {
                             type="text"
                             value={fullName}
                             onChange={(e) => setFullName(e.target.value)}
-                            required
                         />
                     </label>
                     <label>
@@ -157,7 +95,6 @@ const UserDetails = ({ detail }) => {
                             type="date"
                             value={dob}
                             onChange={(e) => setDob(e.target.value)}
-                            required
                         />
                     </label>
                     <label>
@@ -166,49 +103,25 @@ const UserDetails = ({ detail }) => {
                             type="text"
                             value={aboutMe}
                             onChange={(e) => setAboutMe(e.target.value)}
-                            required
                         />
                     </label>
-                    <label>
-                        Profile Picture:
-                        <input
-                            type="file"
-                            onChange={handleFileChange}
-                            accept=".jpeg,.jpg,.png"
-                        />
-                        {profilePicUrl && (
-                            <img
-                                src={profilePicUrl}
-                                alt="Profile"
-                                className="profile-pic"
-                                style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '50%' }}
-                                onError={handleImageError}
-                            />
-                        )}
-                    </label>
-                    {error && <div className="error">{error}</div>}
-                    <button type="submit" disabled={!!error}>Save</button>
+                    <button type="submit">Save</button>
                     <button type="button" onClick={handleCancelClick}>Cancel</button>
                 </form>
             ) : (
-                <div className="user-profile">
-                    <h2 className="profile-name">{detail.fullName.toUpperCase()}</h2>
-                    <img
-                        src={profilePicUrl}
-                        alt="Profile"
-                        className="profile-pic"
-                        onError={handleImageError}
-                        style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '50%' }}
-                    />
-                    <p className="profile-detail"><strong>Date Of Birth: &nbsp;</strong>{formattedDob}</p>
-                    <p className="profile-detail"><strong>Role: &nbsp;</strong>{detail.aboutMe}</p>
-                    <p className="profile-detail"><br /><strong>Profile Created: &nbsp;</strong>{profileCreated}</p>
+                // show details when not in editing mode - isEditing(false)
+                <>
+                    <h2>{detail.fullName.toUpperCase()}</h2>
+                    <p><strong>Date Of Birth: &nbsp;</strong>{formattedDob}</p>
+                    <p><strong>Role: &nbsp;</strong>{detail.aboutMe}</p>
+                    <p><br /><strong>Profile Created: &nbsp;</strong>{formatDistanceToNow(new Date(detail.createdAt), { addSuffix: true })}</p>
                     <div className="icon-container">
-                        <span onClick={handleDeleteClick} className="icon material-symbols-outlined">delete</span>
-                        <span onClick={handleEditClick} className="icon material-symbols-outlined">edit</span>
+                        <span onClick={handleDeleteClick} className="material-symbols-outlined">delete</span>
+                        <span onClick={handleEditClick} className="material-symbols-outlined">edit</span>
                     </div>
-                </div>
+                </>
             )}
+
 
             {/* Display Modals */}
             <ConfirmationModal
@@ -224,6 +137,5 @@ const UserDetails = ({ detail }) => {
             />
         </div>
     );
-};
-
+}
 export default UserDetails;
