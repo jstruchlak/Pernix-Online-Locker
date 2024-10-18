@@ -1,4 +1,6 @@
 import { createContext, useReducer } from "react";
+import React from 'react';
+
 
 
 export const DetailsContext = createContext()
@@ -18,9 +20,9 @@ export const detailsReducer = (state, action) => {
             return {
                 details: [action.payload, ...state.details]
             }
-        case 'DELETE_DETAILS':
-            return {
-                details: state.details.filter((d) => d._id !== action.payload._id)
+            case 'DELETE_DETAILS':
+                return {
+                    details: state.details.filter((d) => d._id !== action.payload._id)
             }
         case 'UPDATE_DETAILS':
             return {

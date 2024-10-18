@@ -62,25 +62,24 @@ userSchema.statics.signup = async function (username, email, password) {
 userSchema.statics.login = async function (username, email, password) {
 
     // login form field validation
-    if (!username || !email || !password) {
-        throw Error('All fields are required')
+     if (!email || !password) {
+        throw Error('All fields are required');
     }
 
     // check to see if email exist in database
-    const user = await this.findOne({ email })
+    const user = await this.findOne({ email });
     if (!user) {
-        throw Error('Incorrect email')
+      throw Error('Incorrect email');
     }
-
     // compare the entered pass with the hashed stored in db (bcrypt.compare) built in function
-    const match = await bcrypt.compare(password, user.password)
+    const match = await bcrypt.compare(password, user.password);
+  if (!match) {
+    throw Error('Incorrect password');
+  }
 
-    if (!match) {
-        throw Error('Incorrect password')
-    }
-
-    return user
+  return user;
 }
+
 
 
 

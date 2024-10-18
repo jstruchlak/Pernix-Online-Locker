@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useDetailsContext } from '../hooks/useDetailsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 import SuccessModal from '../modals/NotificationModal';
+import React from 'react';
+
 
 const UserForm = () => {
     const { dispatch } = useDetailsContext()
@@ -11,11 +13,12 @@ const UserForm = () => {
     const [fullName, setFullName] = useState('')
     const [dob, setDob] = useState('')
     const [aboutMe, setAboutMe] = useState('')
+    const [profilePic, setProfilePic] = useState(null);
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
     const [showSuccessModal, setShowSuccessModal] = useState(false)
     const [notificationMessage, setNotificationMessage] = useState('')
-
+    
     const handleSubmit = async (e) => {
         // prevent auto page refresh
         e.preventDefault()
@@ -25,17 +28,35 @@ const UserForm = () => {
             setError('You must be logged in')
             return
         }
+        
+        if (profilePic) {
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+            const maxSize = 3 * 1024 * 1024; // 3 MB
+    
+            if (!allowedTypes.includes(profilePic.type)) {
+                setError('Invalid file type. Only JPEG, JPG, and PNG files are allowed.');
+                return;
+            }
+    
+            if (profilePic.size > maxSize) {
+                setError('File size exceeds 10 MB.');
+                return;
+            }
+        }
 
-        // object containing values
-        const detail = { fullName, dob, aboutMe }
+        const formData = new FormData();
+        formData.append('fullName', fullName);
+        formData.append('dob', dob);
+        formData.append('aboutMe', aboutMe);
+        if (profilePic) {
+            formData.append('profilePic', profilePic);
+        }
 
         // send POST req - with app.use route from server.js (/api/details)
         const response = await fetch('/api/details', {
             method: 'POST',
-            body: JSON.stringify(detail),
+            body: formData,
             headers: {
-                'Content-Type': 'application/json',
-                // add auth header from auth hook
                 'Authorization': `Bearer ${user.token}`
             }
         })
@@ -56,6 +77,8 @@ const UserForm = () => {
             setFullName('')
             setDob('')
             setAboutMe('')
+            setProfilePic(null)
+            e.target.reset();
             console.log('New user added', json)
             dispatch({ type: 'CREATE_DETAILS', payload: json })
             setShowSuccessModal(true)
@@ -74,27 +97,38 @@ const UserForm = () => {
 
             <h2>CREATE PROFILE</h2>
 
-            <label>Full Name:</label>
+            <label htmlFor="fullName">Full Name:</label>
             <input
+                id="fullName"
                 type="text"
                 onChange={(e) => setFullName(e.target.value)}
                 value={fullName}
                 className={emptyFields.includes('Full Name') ? 'error' : ''}
             />
-            <label>Date of Birth:</label>
+            <label htmlFor="dob">Date of Birth:</label>
             <input
+                id="dob"
                 type="date"
                 onChange={(e) => setDob(e.target.value)}
                 value={dob}
                 max={getMaxDate()}
                 className={emptyFields.includes('Date of Birth') ? 'error' : ''}
             />
-            <label>Role:</label>
+            <label htmlFor="aboutMe">Role:</label>
             <input
+                id="aboutMe"
                 type="text"
                 onChange={(e) => setAboutMe(e.target.value)}
                 value={aboutMe}
                 className={emptyFields.includes('Role') ? 'error' : ''}
+            />
+             <label htmlFor="profilePic">Profile Picture:</label>
+            <input
+                id="profilePic"
+                type="file"
+                accept="image/*"
+                onChange={(e) => setProfilePic(e.target.files[0])}
+                className={emptyFields.includes('Profile Picture') ? 'error' : ''}
             />
 
             <button>Create Profile</button>

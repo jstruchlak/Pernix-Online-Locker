@@ -15,15 +15,15 @@ const detailSchema = new Schema({
         type: String,
         required: true
     },
-   /*  profilePic: {
-        type: String,
+    profilePic: {
+        type: String, 
         required: true
-    } */
+    },
 
     // for document assignment (assigning profiles)
     user_id: {
         type: String,
-        reuired: true
+        required: true
     }
 }, 
 
