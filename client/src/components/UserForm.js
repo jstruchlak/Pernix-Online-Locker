@@ -1,43 +1,42 @@
-import { useState } from 'react'
-import { useDetailsContext } from '../hooks/useDetailsContext'
-import { useAuthContext } from '../hooks/useAuthContext'
-import SuccessModal from '../modals/NotificationModal';
+import { useState } from 'react';
+import { useDetailsContext } from '../hooks/useDetailsContext';
+import { useAuthContext } from '../hooks/useAuthContext';
+import NotificationModal from "../modals/NotificationModal";
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const UserForm = () => {
-    const { dispatch } = useDetailsContext()
-    const { user } = useAuthContext()
-    
-    // set each value's state to null / empty
-    const [fullName, setFullName] = useState('')
-    const [dob, setDob] = useState('')
-    const [aboutMe, setAboutMe] = useState('')
+    const { dispatch } = useDetailsContext();
+    const { user } = useAuthContext();
+    const navigate = useNavigate();
+
+    const [fullName, setFullName] = useState('');
+    const [dob, setDob] = useState('');
+    const [aboutMe, setAboutMe] = useState('');
     const [profilePic, setProfilePic] = useState(null);
-    const [error, setError] = useState(null)
-    const [emptyFields, setEmptyFields] = useState([])
-    const [showSuccessModal, setShowSuccessModal] = useState(false)
-    const [notificationMessage, setNotificationMessage] = useState('')
-    
+    const [error, setError] = useState(null);
+    const [emptyFields, setEmptyFields] = useState([]);
+    const [showNotificationModal, setShowNotificationModal] = useState(false);
+    const [notificationMessage, setNotificationMessage] = useState('');
+
     const handleSubmit = async (e) => {
-        // prevent auto page refresh
         e.preventDefault()
 
-        // if check for logged in user
         if (!user) {
             setError('You must be logged in')
             return
         }
-        
+
         if (profilePic) {
             const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
             const maxSize = 3 * 1024 * 1024; // 3 MB
-    
+
             if (!allowedTypes.includes(profilePic.type)) {
                 setError('Invalid file type. Only JPEG, JPG, and PNG files are allowed.');
                 return;
             }
-    
+
             if (profilePic.size > maxSize) {
                 setError('File size exceeds 10 MB.');
                 return;
@@ -52,7 +51,7 @@ const UserForm = () => {
             formData.append('profilePic', profilePic);
         }
 
-        // send POST req - with app.use route from server.js (/api/details)
+        
         const response = await fetch('/api/details', {
             method: 'POST',
             body: formData,
@@ -61,17 +60,13 @@ const UserForm = () => {
             }
         })
 
-        // backend expects json
         const json = await response.json()
 
-
-        // set error - controller for POST has an error property
         if (!response.ok) {
             setError(json.error)
             setEmptyFields(json.emptyFields)
         }
 
-        // reset state of form values if ok
         if (response.ok) {
             setError(null)
             setFullName('')
@@ -81,8 +76,8 @@ const UserForm = () => {
             e.target.reset();
             console.log('New user added', json)
             dispatch({ type: 'CREATE_DETAILS', payload: json })
-            setShowSuccessModal(true)
             setNotificationMessage('Profile created successfully.')
+            navigate('/', { state: { notification: 'Profile created successfully.' } });
         }
     }
 
@@ -122,7 +117,7 @@ const UserForm = () => {
                 value={aboutMe}
                 className={emptyFields.includes('Role') ? 'error' : ''}
             />
-             <label htmlFor="profilePic">Profile Picture:</label>
+            <label htmlFor="profilePic">Profile Picture:</label>
             <input
                 id="profilePic"
                 type="file"
@@ -136,12 +131,11 @@ const UserForm = () => {
 
 
             {/* Invoke modal */}
-            <SuccessModal
-                isOpen={showSuccessModal}
-                onRequestClose={() => setShowSuccessModal(false)}
+            <NotificationModal
+                isOpen={showNotificationModal}
+                onRequestClose={() => setShowNotificationModal(false)}
                 message={notificationMessage}
             />
-
         </form>
     )
 }

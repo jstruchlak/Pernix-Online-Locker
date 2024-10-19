@@ -5,8 +5,8 @@ const Login = () => {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    
-    // invoke login function etc from uselogin hooks
+
+    // invoke login function 
     const { login, error, isLoading } = useLogin()
 
     const handleSubmit = async (e) => {
@@ -20,7 +20,7 @@ const Login = () => {
             <img
                 src="/auth.png"
                 alt="auth"
-                style={{ width: '120px', height: '35px'}}
+                style={{ width: '120px', height: '35px' }}
             />
             <h3>LOGIN</h3>
 
@@ -46,6 +46,8 @@ const Login = () => {
 
             <button disabled={isLoading}>Login</button>
             {error && <div className="error">{error}</div>}
+
+            <a href="/forgot-password">Forgot Password?</a>
         </form>
     )
 }
