@@ -7,7 +7,7 @@ const SuccessModal = ({ isOpen, onRequestClose, message  }) => {
     if (isOpen) {
       timeout = setTimeout(() => {
         onRequestClose();
-      }, 3000);
+      }, 3500);
     }
 
     return () => clearTimeout(timeout);

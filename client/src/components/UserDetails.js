@@ -1,11 +1,11 @@
 import { useDetailsContext } from '../hooks/useDetailsContext';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
-import format from 'date-fns/format';
+import { formatDistanceToNow } from 'date-fns';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useState } from 'react';
 import ConfirmationModal from '../modals/ConfirmationModal';
 import NotificationModal from '../modals/NotificationModal';
-
+import React from 'react';
+import { format } from 'date-fns';
 
 const UserDetails = ({ detail }) => {
     const { dispatch } = useDetailsContext();
@@ -15,9 +15,37 @@ const UserDetails = ({ detail }) => {
     const [fullName, setFullName] = useState(detail.fullName);
     const [dob, setDob] = useState(detail.dob ? detail.dob.split('T')[0] : '');
     const [aboutMe, setAboutMe] = useState(detail.aboutMe);
+    const [profilePicFile, setProfilePicFile] = useState(null);
+    const [profilePicUrl, setProfilePicUrl] = useState(detail.profilePic);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showNotificationModal, setShowNotificationModal] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
+    const [error, setError] = useState('');
+
+
+    // profile pic validation
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        const allowedTypes = ['image/jpeg', 'image/png'];
+        const maxSize = 5 * 1024 * 1024;
+
+        if (file) {
+            if (!allowedTypes.includes(file.type)) {
+                setProfilePicFile(null);
+                setProfilePicUrl('');
+                setError('Invalid file type. Only JPEG, JPG, and PNG files are allowed.');
+            } else if (file.size > maxSize) {
+                setProfilePicFile(null);
+                setProfilePicUrl('');
+                setError('File size too large. The maximum allowed size is 5 MB.');
+            } else {
+                setProfilePicFile(file);
+                setProfilePicUrl(URL.createObjectURL(file));
+                setError('');
+            }
+        }
+    };
+
 
     // State for showing delete confirmation modal
     const handleDeleteClick = () => {
@@ -34,6 +62,7 @@ const UserDetails = ({ detail }) => {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${user.token}` }
         });
+
         const json = await response.json()
         if (response.ok) {
             dispatch({ type: 'DELETE_DETAILS', payload: json });
@@ -43,7 +72,7 @@ const UserDetails = ({ detail }) => {
     const handleCancelDelete = () => {
         setShowDeleteModal(false);
     }
-     // edit icon will set View Mode to Edit Mode
+    // edit icon will set View Mode to Edit Mode
     const handleEditClick = () => {
         setIsEditing(true);
     }
@@ -57,16 +86,26 @@ const UserDetails = ({ detail }) => {
         if (!user) {
             return;
         }
-        const updatedDetail = { fullName, dob, aboutMe };
+
+        const formData = new FormData();
+        formData.append('fullName', fullName);
+        formData.append('dob', dob);
+        formData.append('aboutMe', aboutMe);
+        if (profilePicFile) {
+            formData.append('profilePic', profilePicFile);
+        }
+
+
         const response = await fetch('api/details/' + detail._id, {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${user.token}`
             },
-            body: JSON.stringify(updatedDetail)
+            body: formData
         });
+
         const json = await response.json();
+
         if (response.ok) {
             dispatch({ type: 'UPDATE_DETAILS', payload: json });
             setIsEditing(false);
@@ -75,7 +114,9 @@ const UserDetails = ({ detail }) => {
         }
     }
 
+
     const formattedDob = detail.dob ? format(new Date(detail.dob), 'MMMM do, yyyy') : '';
+    const profileCreated = detail.createdAt ? formatDistanceToNow(new Date(detail.createdAt), { addSuffix: true }) : 'Date not available';
 
     return (
         <div className="user-details">
@@ -87,6 +128,7 @@ const UserDetails = ({ detail }) => {
                             type="text"
                             value={fullName}
                             onChange={(e) => setFullName(e.target.value)}
+                            required={true}
                         />
                     </label>
                     <label>
@@ -95,6 +137,7 @@ const UserDetails = ({ detail }) => {
                             type="date"
                             value={dob}
                             onChange={(e) => setDob(e.target.value)}
+                            required={true}
                         />
                     </label>
                     <label>
@@ -103,22 +146,48 @@ const UserDetails = ({ detail }) => {
                             type="text"
                             value={aboutMe}
                             onChange={(e) => setAboutMe(e.target.value)}
+                            required={true}
                         />
                     </label>
-                    <button type="submit">Save</button>
+                    <label>
+                        Profile Picture:
+                        <input
+                            type="file"
+                            onChange={handleFileChange}
+                            accept=".jpeg,.jpg,.png"
+                        />
+                        {profilePicUrl && (
+                            <img
+                                src={profilePicUrl}
+                                alt="Profile"
+                                className="profile-pic"
+                                style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '50%' }}
+                            />
+                        )}
+                    </label>
+                    {error && <div className="error">{error}</div>}
+                    <button type="submit" disabled={!!error}>Save</button>
                     <button type="button" onClick={handleCancelClick}>Cancel</button>
                 </form>
             ) : (
                 // show details when not in editing mode - isEditing(false)
-                <>
-                    <h2>{detail.fullName.toUpperCase()}</h2>
-                    <p><strong>Date Of Birth: &nbsp;</strong>{formattedDob}</p>
-                    <p><strong>Role: &nbsp;</strong>{detail.aboutMe}</p>
-                    <p><br /><strong>Profile Created: &nbsp;</strong>{formatDistanceToNow(new Date(detail.createdAt), { addSuffix: true })}</p>
+                <><div className="user-profile">
+                    <h2 className="profile-name">{detail.fullName.toUpperCase()}</h2>
+                    {detail.profilePic && (
+                        <img
+                            src={typeof detail.profilePic === 'string' ? detail.profilePic : URL.createObjectURL(detail.profilePic)}
+                            alt="Profile"
+                            className="profile-pic"
+                        />
+                    )}
+                    <p className="profile-detail"><strong>Date Of Birth: &nbsp;</strong>{formattedDob}</p>
+                    <p className="profile-detail"><strong>Role: &nbsp;</strong>{detail.aboutMe}</p>
+                    <p className="profile-detail"><br /><strong>Profile Created: &nbsp;</strong>{profileCreated}</p>
                     <div className="icon-container">
-                        <span onClick={handleDeleteClick} className="material-symbols-outlined">delete</span>
-                        <span onClick={handleEditClick} className="material-symbols-outlined">edit</span>
+                        <span onClick={handleDeleteClick} className="icon material-symbols-outlined">delete</span>
+                        <span onClick={handleEditClick} className="icon material-symbols-outlined">edit</span>
                     </div>
+                </div>
                 </>
             )}
 
