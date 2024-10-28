@@ -1,22 +1,21 @@
-require('dotenv').config()
+require('dotenv').config();
 
-const express = require('express')
-const mongoose = require('mongoose')
-const detailRoutes = require('./routes/details')
-const userRoutes = require('./routes/user')
+const express = require('express');
+const mongoose = require('mongoose');
+const detailRoutes = require('./routes/details');
+const userRoutes = require('./routes/user');
 const swaggerUi = require('swagger-ui-express');
 const swaggerConfig = require('./swagger/swaggerConfig');
 
+// Start the express application
+const app = express();
 
-// start the express application
-const app = express()
-
-// middleware
-app.use(express.json())
+// Middleware
+app.use(express.json());
 app.use((req, res, next) => {
-    console.log(req.path, req.method)
-    next()
-})
+    console.log(req.path, req.method);
+    next();
+});
 
 // Swagger UI
 app.get('/', (req, res) => {
@@ -24,22 +23,42 @@ app.get('/', (req, res) => {
 });
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
 
-// routing
+// Routing
 app.use('/api/details', detailRoutes);
 app.use('/api/user', userRoutes);
 
-// connecting to our mongoose db (all db request = asynschronis
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-        console.log('Connected to db')
-        app.listen(process.env.PORT, async () => {
-            console.log('Listening on port', process.env.PORT)
+// Connect to the MongoDB database
+const connectToDatabase = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI, {
+        });
+        console.log('Connected to db');
+    } catch (error) {
+        console.error('Error connecting to database:', error);
+        throw error;
+    }
+};
+
+// Start the server
+const startServer = async () => {
+    try {
+        await connectToDatabase();
+        const port = process.env.PORT || 4000; 
+        const server = app.listen(port, async () => {
+            console.log('Listening on port', port);
 
             const open = (await import('open')).default;
-            // swagger UI 
-            open(`http://localhost:${process.env.PORT}/api-docs`);
-        })
-    })
-    .catch((error) => {
-        console.log(error)
-    })
+            open(`http://localhost:${port}/api-docs`);
+        });
+
+        return server; 
+    } catch (error) {
+        console.error('Error starting server:', error);
+    }
+};
+
+if (require.main === module) {
+    startServer();
+}
+
+module.exports = app;

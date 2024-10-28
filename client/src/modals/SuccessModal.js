@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 
-const SuccessModal = ({ isOpen, onRequestClose, message  }) => {
+const SuccessModal = ({ isOpen, onRequestClose, message }) => {
   useEffect(() => {
     let timeout;
     if (isOpen) {

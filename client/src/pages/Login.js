@@ -6,12 +6,10 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    // invoke login function 
     const { login, error, isLoading } = useLogin()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
         await login(username, email, password)
     }
 
@@ -24,22 +22,24 @@ const Login = () => {
             />
             <h3>LOGIN</h3>
 
-            <label>Username</label>
+            <label htmlFor="username">Username</label>
             <input
-                type="username"
-                // (e) event targeting the input text value
+                type="text"
+                id="username"
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
             />
-            <label>Email</label>
+            <label htmlFor="email">Email</label>
             <input
                 type="email"
+                id="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
             />
-            <label>Password</label>
+            <label htmlFor="password">Password</label>
             <input
                 type="password"
+                id="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
             />

@@ -17,7 +17,7 @@ const Navbar = () => {
             <Link to="/">
                     <span>
                         <h1>
-                            {/* add small custom Pernix image for global nav bar */}
+                            {/* add small custom image for global nav bar */}
                             <img
                                 src="/pernix-custom.png"
                                 alt="logo"
@@ -34,7 +34,7 @@ const Navbar = () => {
                         <span>{user.email}</span>
                         <button onClick={handleClick}>Log Out</button>
                     </div> )}
-                    {/* display login and signup uif not a user { } = object ( ) = html template */}
+                    {/* display login and signup if not a user { } = object ( ) = html template */}
                     {!user && (<div>
                         <Link to="/login">Login</Link>
                         <Link to="/signup">Signup</Link>

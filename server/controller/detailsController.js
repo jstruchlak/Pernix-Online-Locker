@@ -6,8 +6,6 @@ const upload = require('../middleware/multerConfig')
 const getDetails = async (req, res) => {
     // add user_id from request body
     const user_id = req.user._id
-
-    // .find({ user_d }) will get all prfiles from db created with that id
     const details = await Detail.find({ user_id }).sort({createdAt: -1})
     res.status(200).json(details)
 
@@ -17,46 +15,45 @@ const getDetails = async (req, res) => {
 // GET a single function
 const getDetail = async (req, res) => {
     const { id } = req.params;
-  
-    console.log('Received request to get detail for ID:', id);
-  
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      console.log('Invalid ID format:', id);
-      return res.status(404).json({ error: 'Does not exist' });
-    }
-  
-    try {
-      const detail = await Detail.findById(id);
-      console.log('Detail retrieved:', detail);
-  
-      if (!detail) {
-        console.log('Detail not found for ID:', id);
-        return res.status(404).json({ error: 'Does not exist' });
-      }
-  
-      return res.status(200).json(detail);
-    } catch (error) {
-      console.error('Error retrieving detail:', error);
-      return res.status(500).json({ error: 'Internal server error' });
-    }
-  };
-  
 
-  
+    console.log('Received request to get detail for ID:', id);
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        console.log('Invalid ID format:', id);
+        return res.status(404).json({ error: 'Does not exist' });
+    }
+
+    try {
+        const detail = await Detail.findById(id);
+        console.log('Detail retrieved:', detail);
+
+        if (!detail) {
+            console.log('Detail not found for ID:', id);
+            return res.status(404).json({ error: 'Does not exist' });
+        }
+
+        return res.status(200).json(detail);
+    } catch (error) {
+        console.error('Error retrieving detail:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
+
 // CREATE function
 const createDetail = async (req, res) => {
-    const {fullName, dob, aboutMe} = req.body
+    const { fullName, dob, aboutMe } = req.body
 
     // error handling check
     let emptyFields = []
 
-    if(!fullName) {
+    if (!fullName) {
         emptyFields.push('Full Name')
     }
-    if(!dob) {
+    if (!dob) {
         emptyFields.push('Date of Birth')
     }
-    if(!aboutMe) {
+    if (!aboutMe) {
         emptyFields.push('Role')
     }
     if (!req.file) {
@@ -64,21 +61,19 @@ const createDetail = async (req, res) => {
     }
 
 
-    // return error message
-    if(emptyFields.length > 0) {
-        return res.status(400).json({error: 'All fields are required', emptyFields})
+    if (emptyFields.length > 0) {
+        return res.status(400).json({ error: 'All fields are required', emptyFields })
     }
 
 
     // try and create a new documemt with the properties from schema
     try {
         const profilePic = req.file.path;
-        // addidng id for assignment implemented inside the middleware folder
         const user_id = req.user._id
         const detail = await Detail.create({ fullName, dob, aboutMe, profilePic, user_id });
         res.status(200).json(detail)
     } catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(400).json({ error: error.message })
 
     }
 }
@@ -118,7 +113,6 @@ const updateDetail = async (req, res) => {
     try {
         let updateFields = { ...req.body };
 
-        // Handle profile picture update if there's a file upload
         if (req.file) {
             updateFields.profilePic = req.file.path;
         }

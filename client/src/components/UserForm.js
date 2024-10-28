@@ -30,7 +30,7 @@ const UserForm = () => {
 
         if (profilePic) {
             const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-            const maxSize = 3 * 1024 * 1024; // 3 MB
+            const maxSize = 5 * 1024 * 1024; // 5 MB
 
             if (!allowedTypes.includes(profilePic.type)) {
                 setError('Invalid file type. Only JPEG, JPG, and PNG files are allowed.');
@@ -38,7 +38,7 @@ const UserForm = () => {
             }
 
             if (profilePic.size > maxSize) {
-                setError('File size exceeds 10 MB.');
+                setError('File size exceeds 5 MB.');
                 return;
             }
         }
@@ -51,7 +51,7 @@ const UserForm = () => {
             formData.append('profilePic', profilePic);
         }
 
-        
+
         const response = await fetch('/api/details', {
             method: 'POST',
             body: formData,
@@ -77,6 +77,7 @@ const UserForm = () => {
             console.log('New user added', json)
             dispatch({ type: 'CREATE_DETAILS', payload: json })
             setNotificationMessage('Profile created successfully.')
+            setShowNotificationModal(true);
             navigate('/', { state: { notification: 'Profile created successfully.' } });
         }
     }
