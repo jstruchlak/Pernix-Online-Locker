@@ -11,13 +11,13 @@ import UserForm from "../components/UserForm";
 
 
 const Home = () => {
-    
-   const {details, dispatch} = useDetailsContext()
-   const { user } = useAuthContext()
-   const [showNotificationModal, setShowNotificationModal] = useState(false);
-   const [notificationMessage, setNotificationMessage] = useState('');
- 
-   const location = useLocation();
+
+    const { details, dispatch } = useDetailsContext()
+    const { user } = useAuthContext()
+    const [showNotificationModal, setShowNotificationModal] = useState(false);
+    const [notificationMessage, setNotificationMessage] = useState('');
+
+    const location = useLocation();
 
     useEffect(() => {
         const fetchDetails = async () => {

@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import ForgotPassword from './pages/ForgotPassword'; // Import the new page
+import ForgotPassword from './pages/ForgotPassword';
 import Navbar from './components/Navbar';
 import { useAuthContext } from './hooks/useAuthContext';
 import ResetPassword from './pages/ResetPassword';

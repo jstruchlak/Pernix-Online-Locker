@@ -4,10 +4,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import NotificationModal from "../modals/NotificationModal";
 
 const ResetPassword = () => {
-  const { token } = useParams(); 
-  const navigate = useNavigate(); 
+  const { token } = useParams();
+  const navigate = useNavigate();
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState(''); 
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [showNotificationModal, setShowNotificationModal] = useState(false);
@@ -15,7 +15,6 @@ const ResetPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if passwords match
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       setSuccess('');
@@ -29,7 +28,9 @@ const ResetPassword = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, password }),
       });
+
       const json = await response.json();
+      
       if (response.ok) {
         setSuccess(json.message);
         setError('');
@@ -37,7 +38,7 @@ const ResetPassword = () => {
         setPassword('');
         setConfirmPassword('');
         // Redirect to home page
-        setTimeout(() => navigate('/'), 2000); 
+        setTimeout(() => navigate('/'), 2000);
       } else {
         setError(json.error || 'An error occurred');
         setSuccess('');

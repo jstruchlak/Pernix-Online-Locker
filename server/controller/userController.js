@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
-const validator = require('validator')
+const validator = require('validator');
 // const config = require('../config')
 
 
@@ -42,7 +42,7 @@ const signupUser = async (req, res) => {
   }
 };
 
-
+// SMTP2GO config
 const transporter = nodemailer.createTransport({
   host: 'mail.smtp2go.com',
   port: 587,
@@ -72,7 +72,7 @@ const forgotPassword = async (req, res) => {
     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
     await user.save();
 
-    // Log the reset URL (comment out the config if you're not using it)
+    
     const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
     console.log('Sending reset email to:', email);
 

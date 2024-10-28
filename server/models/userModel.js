@@ -18,9 +18,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    
+
     resetPasswordToken: String,
     resetPasswordExpires: Date
+
 })
 
 // static signup method 
@@ -31,7 +32,7 @@ userSchema.statics.signup = async function (username, email, password) {
         throw Error('All fields are required')
     }
 
-    // form validator package validation - package func
+    // form validator package validation 
     if (!validator.isLength(username, { min: 4, max: 30 })) {
         throw Error('Username is not valid. It should be 4-30 characters')
     }
@@ -43,20 +44,16 @@ userSchema.statics.signup = async function (username, email, password) {
     }
 
     const exists = await this.findOne({ email })
-    // throw error if already in use
     if (exists) {
         throw Error('A user with this email already exists')
     }
 
     // execute bcrypt functions if email valid
-    // Generate a salt for hashing the password 
     const salt = await bcrypt.genSalt(14)
-    // compute the hash 16384 times = 14
     const hash = await bcrypt.hash(password, salt)
 
     // Create a new user with the provided email and hashed password
     const user = await this.create({ username, email, password: hash })
-
     return user
 }
 
@@ -64,25 +61,27 @@ userSchema.statics.signup = async function (username, email, password) {
 userSchema.statics.login = async function (username, email, password) {
 
     // login form field validation
-     if (!email || !password) {
+    if (!username || !email || !password) {
         throw Error('All fields are required');
     }
 
-    // check to see if email exist in database
+    const userName = await this.findOne({ username });
+    if (!userName) {
+        throw Error('Incorrect Username')
+    }
+
     const user = await this.findOne({ email });
     if (!user) {
-      throw Error('Incorrect email');
+        throw Error('Incorrect Email');
     }
-    // compare the entered pass with the hashed stored in db (bcrypt.compare) built in function
+    // compare the entered pass with the hashed stored in db (bcrypt function)
     const match = await bcrypt.compare(password, user.password);
-  if (!match) {
-    throw Error('Incorrect password');
-  }
+    if (!match) {
+        throw Error('Incorrect Password');
+    }
 
-  return user;
+    return user;
 }
-
-
 
 
 module.exports = mongoose.model('User', userSchema)

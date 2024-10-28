@@ -46,7 +46,6 @@ const UserDetails = ({ detail }) => {
         }
     };
 
-
     // State for showing delete confirmation modal
     const handleDeleteClick = () => {
         setShowDeleteModal(true);
@@ -72,11 +71,11 @@ const UserDetails = ({ detail }) => {
     const handleCancelDelete = () => {
         setShowDeleteModal(false);
     }
-    // edit icon will set View Mode to Edit Mode
+    
     const handleEditClick = () => {
         setIsEditing(true);
     }
-    // default set is editing to false - View Mode
+    
     const handleCancelClick = () => {
         setIsEditing(false);
     }
@@ -165,6 +164,7 @@ const UserDetails = ({ detail }) => {
                             />
                         )}
                     </label>
+
                     {error && <div className="error">{error}</div>}
                     <button type="submit" disabled={!!error}>Save</button>
                     <button type="button" onClick={handleCancelClick}>Cancel</button>
@@ -190,7 +190,6 @@ const UserDetails = ({ detail }) => {
                 </div>
                 </>
             )}
-
 
             {/* Display Modals */}
             <ConfirmationModal

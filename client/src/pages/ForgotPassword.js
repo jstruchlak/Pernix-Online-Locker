@@ -36,19 +36,20 @@ const ForgotPassword = () => {
       } else {
         setError(json.error || 'An error occurred');
       }
-      
     } catch (error) {
       console.error('Fetch error:', error);
       setError('An error occurred while sending the reset link.');
     } finally {
       setLoading(false);
       setEmail('');
+
       setTimeout(() => {
         setError('');
         setMessage('');
       }, 3000);
     }
   };
+  
   return (
     <div>
       <form className="forgot-password" onSubmit={handleSubmit}>
