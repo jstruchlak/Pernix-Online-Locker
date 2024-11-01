@@ -4,6 +4,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import NotificationModal from "../modals/NotificationModal";
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import config from '../config/config';
 
 
 const UserForm = () => {
@@ -52,7 +53,7 @@ const UserForm = () => {
         }
 
 
-        const response = await fetch('/api/details', {
+        const response = await fetch(`${config.apiServer}/api/details`, {
             method: 'POST',
             body: formData,
             headers: {

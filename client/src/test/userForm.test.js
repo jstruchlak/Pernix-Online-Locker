@@ -54,7 +54,10 @@ test('submits form data and shows success message in the modal', async () => {
   fireEvent.click(screen.getByRole('button', { name: /Create Profile/i }));
 
   await waitFor(() => {
-    expect(fetch).toHaveBeenCalledWith('/api/details', {
+      //
+      // expect(fetch).toHaveBeenCalledWith('/api/details', {
+      //
+      expect(fetch).toHaveBeenCalledWith('https://pernix-api-locker.azurewebsites.net/api/details', {
       method: 'POST',
       body: expect.any(FormData),
       headers: {

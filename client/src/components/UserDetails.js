@@ -6,6 +6,7 @@ import ConfirmationModal from '../modals/ConfirmationModal';
 import NotificationModal from '../modals/NotificationModal';
 import React from 'react';
 import { format } from 'date-fns';
+import config from '../config/config';
 
 const UserDetails = ({ detail }) => {
     const { dispatch } = useDetailsContext();
@@ -57,7 +58,7 @@ const UserDetails = ({ detail }) => {
             return;
         }
 
-        const response = await fetch('api/details/' + detail._id, {
+        const response = await fetch(`${config.apiServer}/api/details/${detail._id}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${user.token}` }
         });

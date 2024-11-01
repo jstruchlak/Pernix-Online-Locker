@@ -1,6 +1,7 @@
 import { useState } from "react";
 // import config from '../config';
 import NotificationModal from "../modals/NotificationModal";
+import config from "../config/config";
 
 
 const ForgotPassword = () => {
@@ -18,7 +19,7 @@ const ForgotPassword = () => {
     setShowNotificationModal(false);
 
     try {
-      const response = await fetch('/api/user/forgot-password', {
+      const response = await fetch(`${config.apiServer}/api/user/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })

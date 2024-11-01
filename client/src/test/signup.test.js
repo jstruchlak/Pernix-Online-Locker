@@ -37,7 +37,10 @@ test('renders signup form and submits data correctly', async () => {
   fireEvent.click(submitButton);
 
   await waitFor(() => {
-    expect(fetch).toHaveBeenCalledWith('/api/user/signup', {
+    // 
+    // expect(fetch).toHaveBeenCalledWith('/api/user/signup', {
+    //
+      expect(fetch).toHaveBeenCalledWith('https://pernix-api-locker.azurewebsites.net/api/user/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

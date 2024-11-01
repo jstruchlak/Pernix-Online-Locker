@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
+import config from "../config/config";
 import NotificationModal from "../modals/NotificationModal";
 
 const ResetPassword = () => {
@@ -23,7 +23,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const response = await fetch('/api/user/reset-password', {
+      const response = await fetch(`${config.apiServer}/api/user/reset-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, password }),

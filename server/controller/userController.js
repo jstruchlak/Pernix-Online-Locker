@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
-// const config = require('../config')
+const config = require('../config/config')
 
 
 // Generate a token
@@ -73,7 +73,7 @@ const forgotPassword = async (req, res) => {
     await user.save();
 
     
-    const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
+    const resetUrl = `${config.DEV_BASE_URL}/reset-password/${resetToken}`;
     console.log('Sending reset email to:', email);
 
     const mailOptions = {

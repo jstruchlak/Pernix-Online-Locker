@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAuthContext } from '../hooks/useAuthContext'
+import config from '../config/config'
 
 export const useSignup = () => {
     const [error, setError] = useState(null)
@@ -11,8 +12,8 @@ export const useSignup = () => {
         setIsLoading(true)
         setError(null)
 
-        // POST req 
-        const response = await fetch('/api/user/signup', {
+        // POST request 
+        const response = await fetch(`${config.apiServer}/api/user/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

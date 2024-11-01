@@ -4,6 +4,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import { useLocation } from 'react-router-dom';
 // import config from '../config';
 import NotificationModal from '../modals/NotificationModal';
+import config from '../config/config';
 
 // components
 import UserDetails from '../components/UserDetails';
@@ -21,7 +22,7 @@ const Home = () => {
 
     useEffect(() => {
         const fetchDetails = async () => {
-            const response = await fetch('/api/details', {
+            const response = await fetch(`${config.apiServer}/api/details`, {
                 headers: { 'Authorization': `Bearer ${user.token}` },
             })
             const json = await response.json()

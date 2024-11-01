@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1730076362048" clover="3.2.0">
-  <project timestamp="1730076362048" name="All files">
-    <metrics statements="132" coveredstatements="108" conditionals="48" coveredconditionals="24" methods="28" coveredmethods="24" elements="208" coveredelements="156" complexity="0" loc="132" ncloc="132" packages="5" files="8" classes="8"/>
+<coverage generated="1730423037495" clover="3.2.0">
+  <project timestamp="1730423037495" name="All files">
+    <metrics statements="134" coveredstatements="110" conditionals="50" coveredconditionals="26" methods="28" coveredmethods="24" elements="212" coveredelements="160" complexity="0" loc="134" ncloc="134" packages="6" files="9" classes="9"/>
     <package name="components">
       <metrics statements="59" coveredstatements="50" conditionals="24" coveredconditionals="12" methods="8" coveredmethods="7"/>
       <file name="UserForm.js" path="C:\LEARNING WORKSPACE\PNX Online Locker\Pernix-Online-Locker-MERN\client\src\components\UserForm.js">
         <metrics statements="59" coveredstatements="50" conditionals="24" coveredconditionals="12" methods="8" coveredmethods="7"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="10" count="7" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
         <line num="11" count="7" type="stmt"/>
         <line num="12" count="7" type="stmt"/>
-        <line num="14" count="7" type="stmt"/>
+        <line num="13" count="7" type="stmt"/>
         <line num="15" count="7" type="stmt"/>
         <line num="16" count="7" type="stmt"/>
         <line num="17" count="7" type="stmt"/>
@@ -18,33 +17,33 @@
         <line num="19" count="7" type="stmt"/>
         <line num="20" count="7" type="stmt"/>
         <line num="21" count="7" type="stmt"/>
-        <line num="23" count="7" type="stmt"/>
-        <line num="24" count="1" type="stmt"/>
-        <line num="26" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="27" count="0" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+        <line num="24" count="7" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="27" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="28" count="0" type="stmt"/>
-        <line num="31" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="32" count="1" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="32" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="33" count="1" type="stmt"/>
-        <line num="35" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="36" count="0" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="36" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="37" count="0" type="stmt"/>
-        <line num="40" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="41" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="41" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="42" count="0" type="stmt"/>
-        <line num="46" count="1" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
         <line num="47" count="1" type="stmt"/>
         <line num="48" count="1" type="stmt"/>
         <line num="49" count="1" type="stmt"/>
-        <line num="50" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="51" count="1" type="stmt"/>
-        <line num="55" count="1" type="stmt"/>
-        <line num="63" count="1" type="stmt"/>
-        <line num="65" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="66" count="0" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="51" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="66" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="67" count="0" type="stmt"/>
-        <line num="70" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="71" count="1" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="71" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="72" count="1" type="stmt"/>
         <line num="73" count="1" type="stmt"/>
         <line num="74" count="1" type="stmt"/>
@@ -55,16 +54,25 @@
         <line num="79" count="1" type="stmt"/>
         <line num="80" count="1" type="stmt"/>
         <line num="81" count="1" type="stmt"/>
-        <line num="85" count="7" type="stmt"/>
+        <line num="82" count="1" type="stmt"/>
         <line num="86" count="7" type="stmt"/>
         <line num="87" count="7" type="stmt"/>
         <line num="88" count="7" type="stmt"/>
-        <line num="91" count="7" type="stmt"/>
-        <line num="100" count="1" type="stmt"/>
-        <line num="108" count="1" type="stmt"/>
-        <line num="117" count="1" type="stmt"/>
-        <line num="126" count="1" type="stmt"/>
-        <line num="137" count="0" type="stmt"/>
+        <line num="89" count="7" type="stmt"/>
+        <line num="92" count="7" type="stmt"/>
+        <line num="101" count="1" type="stmt"/>
+        <line num="109" count="1" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
+        <line num="127" count="1" type="stmt"/>
+        <line num="138" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="config">
+      <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="0" coveredmethods="0"/>
+      <file name="config.js" path="C:\LEARNING WORKSPACE\PNX Online Locker\Pernix-Online-Locker-MERN\client\src\config\config.js">
+        <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="0" coveredmethods="0"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
       </file>
     </package>
     <package name="context">
@@ -123,23 +131,23 @@
       </file>
       <file name="useSignup.js" path="C:\LEARNING WORKSPACE\PNX Online Locker\Pernix-Online-Locker-MERN\client\src\hooks\useSignup.js">
         <metrics statements="17" coveredstatements="15" conditionals="4" coveredconditionals="2" methods="2" coveredmethods="2"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="5" count="5" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
         <line num="6" count="5" type="stmt"/>
-        <line num="8" count="5" type="stmt"/>
-        <line num="10" count="5" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
+        <line num="7" count="5" type="stmt"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="11" count="5" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="25" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="26" count="0" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="26" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="27" count="0" type="stmt"/>
-        <line num="30" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="32" count="1" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="31" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="33" count="1" type="stmt"/>
-        <line num="35" count="1" type="stmt"/>
-        <line num="40" count="5" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="41" count="5" type="stmt"/>
       </file>
     </package>
     <package name="modals">
