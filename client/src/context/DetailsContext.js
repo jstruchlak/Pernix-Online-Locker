@@ -1,20 +1,16 @@
 import { createContext, useReducer } from "react";
-
+import React from 'react';
 
 export const DetailsContext = createContext()
 
-// state = current or prev state -> details: null (set below)
-// action = dispatch with payload prop
 export const detailsReducer = (state, action) => {
     switch (action.type) {
         case 'SET_DETAILS':
-            // return the new value that want the state to be - new details object updated
             return {
                 details: action.payload
             }
         case 'CREATE_DETAILS':
             // ... spread operator for all to return
-            // state to check current prev state
             return {
                 details: [action.payload, ...state.details]
             }
@@ -33,8 +29,7 @@ export const detailsReducer = (state, action) => {
 }
 
 // wrap context around whole app inside index.js - make DetailsContext parent to App.js
-export const DetailsContextProvider =  ({ children }) => {
-    // useReducer returns two things: the current state and a dispatch function
+export const DetailsContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(detailsReducer, {
         details: null
     })
@@ -43,6 +38,5 @@ export const DetailsContextProvider =  ({ children }) => {
         <DetailsContext.Provider value={{ ...state, dispatch }}>
             {children}
         </DetailsContext.Provider>
-        
     )
 }

@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 
-const SuccessModal = ({ isOpen, onRequestClose, message  }) => {
+const SuccessModal = ({ isOpen, onRequestClose, message }) => {
   useEffect(() => {
     let timeout;
     if (isOpen) {
       timeout = setTimeout(() => {
         onRequestClose();
-      }, 3000);
+      }, 3500);
     }
 
     return () => clearTimeout(timeout);

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
 
@@ -5,9 +6,7 @@ const Signup = () => {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
-    // invoke signup hook
-    const { signup, isLoading, error } = useSignup()
+    const { signup, isLoading, isSubmitting, error } = useSignup()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,23 +22,29 @@ const Signup = () => {
             />
             <h3>SIGN UP</h3>
 
-            <label>Username</label>
+            <label htmlFor="username">Username</label>
             <input
+                id="username"
                 type="text"
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
+                disabled={isSubmitting}
             />
-            <label>Email</label>
+           <label htmlFor="email">Email</label>
             <input
+                id="email"
                 type="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+                disabled={isSubmitting}
             />
-            <label>Password</label>
+             <label htmlFor="password">Password</label>
             <input
+                id="password"
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
+                disabled={isSubmitting}
             />
 
             {/* // disable button while a request is happening */}

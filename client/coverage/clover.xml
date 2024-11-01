@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1730423037495" clover="3.2.0">
+  <project timestamp="1730423037495" name="All files">
+    <metrics statements="134" coveredstatements="110" conditionals="50" coveredconditionals="26" methods="28" coveredmethods="24" elements="212" coveredelements="160" complexity="0" loc="134" ncloc="134" packages="6" files="9" classes="9"/>
+    <package name="components">
+      <metrics statements="59" coveredstatements="50" conditionals="24" coveredconditionals="12" methods="8" coveredmethods="7"/>
+      <file name="UserForm.js" path="C:\LEARNING WORKSPACE\PNX Online Locker\Pernix-Online-Locker-MERN\client\src\components\UserForm.js">
+        <metrics statements="59" coveredstatements="50" conditionals="24" coveredconditionals="12" methods="8" coveredmethods="7"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="7" type="stmt"/>
+        <line num="12" count="7" type="stmt"/>
+        <line num="13" count="7" type="stmt"/>
+        <line num="15" count="7" type="stmt"/>
+        <line num="16" count="7" type="stmt"/>
+        <line num="17" count="7" type="stmt"/>
+        <line num="18" count="7" type="stmt"/>
+        <line num="19" count="7" type="stmt"/>
+        <line num="20" count="7" type="stmt"/>
+        <line num="21" count="7" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+        <line num="24" count="7" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="27" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="32" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="36" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="41" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="51" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="66" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="71" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="74" count="1" type="stmt"/>
+        <line num="75" count="1" type="stmt"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="80" count="1" type="stmt"/>
+        <line num="81" count="1" type="stmt"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="86" count="7" type="stmt"/>
+        <line num="87" count="7" type="stmt"/>
+        <line num="88" count="7" type="stmt"/>
+        <line num="89" count="7" type="stmt"/>
+        <line num="92" count="7" type="stmt"/>
+        <line num="101" count="1" type="stmt"/>
+        <line num="109" count="1" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
+        <line num="127" count="1" type="stmt"/>
+        <line num="138" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="config">
+      <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="0" coveredmethods="0"/>
+      <file name="config.js" path="C:\LEARNING WORKSPACE\PNX Online Locker\Pernix-Online-Locker-MERN\client\src\config\config.js">
+        <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="0" coveredmethods="0"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="context">
+      <metrics statements="27" coveredstatements="20" conditionals="12" coveredconditionals="6" methods="7" coveredmethods="6"/>
+      <file name="AuthContext.js" path="C:\LEARNING WORKSPACE\PNX Online Locker\Pernix-Online-Locker-MERN\client\src\context\AuthContext.js">
+        <metrics statements="14" coveredstatements="9" conditionals="5" coveredconditionals="1" methods="3" coveredmethods="2"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="0" type="cond" truecount="0" falsecount="3"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="25" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+      </file>
+      <file name="DetailsContext.js" path="C:\LEARNING WORKSPACE\PNX Online Locker\Pernix-Online-Locker-MERN\client\src\context\DetailsContext.js">
+        <metrics statements="13" coveredstatements="11" conditionals="7" coveredconditionals="5" methods="4" coveredmethods="4"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="3" type="cond" truecount="3" falsecount="2"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="33" count="4" type="stmt"/>
+        <line num="37" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="hooks">
+      <metrics statements="27" coveredstatements="20" conditionals="8" coveredconditionals="3" methods="4" coveredmethods="3"/>
+      <file name="useAuthContext.js" path="C:\LEARNING WORKSPACE\PNX Online Locker\Pernix-Online-Locker-MERN\client\src\hooks\useAuthContext.js">
+        <metrics statements="5" coveredstatements="4" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="7" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="11" count="5" type="stmt"/>
+      </file>
+      <file name="useDetailsContext.js" path="C:\LEARNING WORKSPACE\PNX Online Locker\Pernix-Online-Locker-MERN\client\src\hooks\useDetailsContext.js">
+        <metrics statements="5" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="7" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+      </file>
+      <file name="useSignup.js" path="C:\LEARNING WORKSPACE\PNX Online Locker\Pernix-Online-Locker-MERN\client\src\hooks\useSignup.js">
+        <metrics statements="17" coveredstatements="15" conditionals="4" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="7" count="5" type="stmt"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="11" count="5" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="26" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="31" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="41" count="5" type="stmt"/>
+      </file>
+    </package>
+    <package name="modals">
+      <metrics statements="7" coveredstatements="6" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="3"/>
+      <file name="NotificationModal.js" path="C:\LEARNING WORKSPACE\PNX Online Locker\Pernix-Online-Locker-MERN\client\src\modals\NotificationModal.js">
+        <metrics statements="7" coveredstatements="6" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="3"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="7" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="13" count="7" type="stmt"/>
+        <line num="16" count="7" type="stmt"/>
+      </file>
+    </package>
+    <package name="pages">
+      <metrics statements="12" coveredstatements="12" conditionals="2" coveredconditionals="1" methods="5" coveredmethods="5"/>
+      <file name="Signup.js" path="C:\LEARNING WORKSPACE\PNX Online Locker\Pernix-Online-Locker-MERN\client\src\pages\Signup.js">
+        <metrics statements="12" coveredstatements="12" conditionals="2" coveredconditionals="1" methods="5" coveredmethods="5"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="7" count="5" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="11" count="5" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="5" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="45" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

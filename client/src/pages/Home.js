@@ -1,6 +1,10 @@
-import { useEffect } from "react"
-import { useDetailsContext } from "../hooks/useDetailsContext";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useEffect, useState } from 'react';
+import { useDetailsContext } from '../hooks/useDetailsContext';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { useLocation } from 'react-router-dom';
+// import config from '../config';
+import NotificationModal from '../modals/NotificationModal';
+import config from '../config/config';
 
 // components
 import UserDetails from '../components/UserDetails';
@@ -8,48 +12,58 @@ import UserForm from "../components/UserForm";
 
 
 const Home = () => {
-    // invoked from details context where details state is set to null
-    // dispatch function attached will fire 'action' to update state
-   const {details, dispatch} = useDetailsContext()
-   const { user } = useAuthContext()
+
+    const { details, dispatch } = useDetailsContext()
+    const { user } = useAuthContext()
+    const [showNotificationModal, setShowNotificationModal] = useState(false);
+    const [notificationMessage, setNotificationMessage] = useState('');
+
+    const location = useLocation();
 
     useEffect(() => {
         const fetchDetails = async () => {
-            // response must contain Authorization token use backticks and access user vairable from useAuthContext
-            const response = await fetch('/api/details', {
-                headers: {'Authorization': `Bearer ${user.token}`},
-              })
-              const json = await response.json()
+            const response = await fetch(`${config.apiServer}/api/details`, {
+                headers: { 'Authorization': `Bearer ${user.token}` },
+            })
+            const json = await response.json()
 
-
-            if(response.ok) {
-                // fire the dispatch if all good
-                dispatch({type: 'SET_DETAILS', payload: json})
+            if (response.ok) {
+                dispatch({ type: 'SET_DETAILS', payload: json })
             }
         }
 
-
-        // checks if there is a user from AuthContext
-        if(user) {
+        if (user) {
             fetchDetails()
         }
 
-     //  make user from AuthContext a dispatch dependency
-    }, [dispatch, user])
+    }, [dispatch, user]);
 
+
+    useEffect(() => {
+        if (location.state?.notification) {
+            setNotificationMessage(location.state.notification);
+            setShowNotificationModal(true);
+        }
+    }, [location]);
 
     return (
         <div className="home">
             <div className="details">
-                {/* see if any data to display and returns so in a template - details.map for a future roles function */}
-                {details && details.map((detail) => (
-                    // output detail values in template return template = ( )
-                    <UserDetails key={detail._id} detail={detail} />
-                ))}
+                {details &&
+                    details.map((detail) => (
+                        <UserDetails key={detail._id} detail={detail} />
+                    ))}
             </div>
-            <UserForm />
-        </div>
-    )
-}
+            {details && details.length === 0 && <UserForm />}
 
-export default Home
+            {/* Notification Modal */}
+            <NotificationModal
+                isOpen={showNotificationModal}
+                onRequestClose={() => setShowNotificationModal(false)}
+                message={notificationMessage}
+            />
+        </div>
+    );
+};
+
+export default Home;
